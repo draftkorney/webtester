@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class TestResult extends ManagerEntity {
 
     @Id
-    @SequenceGenerator(name = "TEST_RESULT_IDTEST_RESULT_GENERATOR", sequenceName = "test_result_seq")
+    @SequenceGenerator(name = "TEST_RESULT_IDTEST_RESULT_GENERATOR", sequenceName = "test_result_seq", allocationSize = 1)
     @GeneratedValue(generator = "TEST_RESULT_IDTEST_RESULT_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_test_result", nullable = false, unique = true)
     private long idTestResult;

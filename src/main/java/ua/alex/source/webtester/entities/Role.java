@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Role extends ManagerEntity {
 
     @Id
-    @SequenceGenerator(name = "ROLE_IDROLE_GENERATOR", sequenceName = "role_seq")
+    @SequenceGenerator(name = "ROLE_IDROLE_GENERATOR", sequenceName = "role_seq",allocationSize = 1)
     @GeneratedValue(generator = "ROLE_IDROLE_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_role")
     private short idRole;

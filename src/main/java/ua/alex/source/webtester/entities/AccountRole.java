@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class AccountRole extends ManagerEntity {
 
     @Id
-    @SequenceGenerator(name = "ACCOUNT_ROLE_IDACCOUNT_ROLE_GENERATOR", sequenceName = "account_role_seq")
+    @SequenceGenerator(name = "ACCOUNT_ROLE_IDACCOUNT_ROLE_GENERATOR", sequenceName = "account_role_seq",allocationSize = 1)
     @GeneratedValue(generator = "ACCOUNT_ROLE_IDACCOUNT_ROLE_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_account_role", nullable = false, unique = true)
     private long idAccountRole;

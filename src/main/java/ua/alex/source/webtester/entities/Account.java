@@ -11,7 +11,7 @@ public class Account extends ManagerEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "ACCOUNT_IDACCOUNT_GENERATOR", sequenceName = "account_seq")
+    @SequenceGenerator(name = "ACCOUNT_IDACCOUNT_GENERATOR", sequenceName = "account_seq", allocationSize = 1)
     @GeneratedValue(generator = "ACCOUNT_IDACCOUNT_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_account", nullable = false, unique = true)
     private Long idAccount;

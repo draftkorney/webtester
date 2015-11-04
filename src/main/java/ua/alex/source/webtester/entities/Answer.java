@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class Answer extends ManagerEntity {
 
     @Id
-    @SequenceGenerator(name = "ANSWER_IDANSWER_GENERATOR", sequenceName = "answer_seq")
+    @SequenceGenerator(name = "ANSWER_IDANSWER_GENERATOR", sequenceName = "answer_seq",allocationSize = 1)
     @GeneratedValue(generator = "ANSWER_IDANSWER_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_answer")
     private long idAnswer;
