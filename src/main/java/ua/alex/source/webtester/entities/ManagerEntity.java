@@ -9,10 +9,10 @@ import java.sql.Timestamp;
 @MappedSuperclass
 public abstract class ManagerEntity extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false)
     private Boolean active;
 
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false)
     private Timestamp created;
 
     private Timestamp updated;
