@@ -40,10 +40,10 @@ public abstract class AbstractEntity implements IEntity, Comparable<AbstractEnti
         return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
+    }*/
 
     @Override
     public int compareTo(AbstractEntity o) {

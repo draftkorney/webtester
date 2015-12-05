@@ -6,7 +6,7 @@ import ua.alex.source.webtester.entities.Account;
 import java.util.List;
 
 public interface AccountDao extends IEntityDao<Account> {
-    List getAccounts(int row, int count);
+    List<Account> getAccounts(int row, int count);
 
     Account getByEmail(String email);
 

@@ -4,13 +4,10 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/webtester</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.username">webtester</property>
-        <property name="connection.password">S0urce1t</property>
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <!--<property name="hibernate.hbm2ddl.auto">update</property>-->
 
         <mapping class="ua.alex.source.webtester.entities.Account"/>
         <mapping class="ua.alex.source.webtester.entities.AccountRegistration"/>

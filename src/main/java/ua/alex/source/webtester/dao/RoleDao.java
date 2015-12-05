@@ -1,7 +1,7 @@
 package ua.alex.source.webtester.dao;
 
-/**
- * Created by Alex-II on 06.11.2015.
- */
-public interface RoleDao {
+import ua.alex.source.webtester.entities.Role;
+
+public interface RoleDao extends IEntityDao<Role> {
+    Role getStudentRole();
 }

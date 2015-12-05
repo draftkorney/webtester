@@ -2,9 +2,10 @@ package ua.alex.source.webtester.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
-public class Role extends ManagerEntity {
+public class Role extends AbstractEntity {
 
     @Id
     @SequenceGenerator(name = "ROLE_IDROLE_GENERATOR", sequenceName = "role_seq",allocationSize = 1)
@@ -14,6 +15,8 @@ public class Role extends ManagerEntity {
 
     @Column(name = "name", nullable = false, length = 15)
     private String name;
+
+    private Timestamp updated;
 
     public String getName() {
         return name;

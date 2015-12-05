@@ -1,8 +1,13 @@
 package ua.alex.source.webtester.entities;
 
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Entity
@@ -92,4 +97,16 @@ public class Account extends ManagerEntity {
         this.confirm = confirm;
     }
 
+    public List<AccountRole> getAccountRoles() {
+        return accountRoles;
+    }
+
+    public void setAccountRoles(List<AccountRole> accountRoles) {
+        this.accountRoles = accountRoles;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toStringExclude(this, new String[]{"accountRoles", "password"});
+    }
 }

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import ua.alex.source.webtester.dao.IEntityDao;
 import ua.alex.source.webtester.entities.IEntity;
 
-@Repository
+import java.util.List;
+
 public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
 
     @Autowired
@@ -27,5 +28,10 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
     @Override
     public void update(T entity) {
         getSession().update(entity);
+    }
+
+    @Override
+    public List<T> findAll() {
+        return getSession().createCriteria(getEntityClass()).list();
     }
 }

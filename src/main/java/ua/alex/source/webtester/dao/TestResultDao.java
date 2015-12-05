@@ -1,4 +1,5 @@
 package ua.alex.source.webtester.dao;
 
-public interface QuestionDao {
+
+public interface TestResultDao {
 }

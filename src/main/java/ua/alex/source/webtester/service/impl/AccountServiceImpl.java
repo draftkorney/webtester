@@ -6,6 +6,9 @@ import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.service.AccountService;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -20,5 +23,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void update(Account account) {
         accountDao.update(account);
+    }
+
+    @Override
+    @Transactional
+    public List<Account> getAll(int row, int count) {
+        return accountDao.getAccounts(0, 10);
     }
 }
