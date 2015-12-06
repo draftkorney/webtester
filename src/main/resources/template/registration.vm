@@ -1,0 +1,6 @@
+#springMessage("email.hi") $firstName!
+<br/>
+#springMessage("email.body")
+<br/>
+<a href='$props.baseSite/confirmationEmail?hashCode=$hashCode'>$props.baseSite/confirmationEmail?hashCode=$hashCode</a>
+<br/>

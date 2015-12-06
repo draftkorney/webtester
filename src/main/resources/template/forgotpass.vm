@@ -1,0 +1,7 @@
+#springMessage("email.hi") $firstName!
+<br/>
+#springMessage("registration.form.login") $login
+#springMessage("email.forgot.body") $password
+
+<a href='$props.baseSite/activateNewPassword?userId=$id'>$props.baseSite/activateNewPassword?userId=$id</a>
+<br/>

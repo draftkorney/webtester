@@ -2,6 +2,7 @@ package ua.alex.source.webtester.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "account_registration", schema = "public", catalog = "webtester")
@@ -17,6 +18,11 @@ public class AccountRegistration extends AbstractEntity {
     @OneToOne
     @JoinColumn(name = "id_account", nullable = false, updatable = false, insertable = false)
     private Account account;
+
+    public AccountRegistration(Account account, String uuid) {
+        this.hash = uuid;
+        this.account = account;
+    }
 
     public int getIdAccount() {
         return idAccount;

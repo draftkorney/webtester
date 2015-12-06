@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+              <property name="host" value="${mail.host}"/>
+              <property name="port" value="${mail.port}"/>
+              <!--Due to Spring's mail sender behaviour, mail.smtp.auth isn't enough,
+                  so you need to exclude username/password explicitly-->
+              <property name="username" value="${mail.user.name}"/>
+              <property name="password" value="${mail.user.password}"/>
+              <property name="javaMailProperties">
+                     <props>
+                            <prop key="mail.smtp.starttls.enable">true</prop>
+                            <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                            <prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+                     </props>
+              </property>
+       </bean>
+
+       <!--    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+               <property name="resourceLoaderPath" value="classpath:/org/springbyexample/email"/>
+               <property name="preferFileSystemAccess" value="false"/>
+           </bean>-->
+
+       <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+              <property name="preferFileSystemAccess" value="false"/>
+              <property name="velocityProperties">
+                     <props>
+                            <prop key="class.resource.loader.class">
+                                   org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                            </prop>
+                            <prop key="resource.loader">class</prop>
+                            <prop key="velocimacro.library">org/springframework/web/servlet/view/velocity/spring.vm</prop>
+                     </props>
+              </property>
+       </bean>
+
+</beans>

@@ -8,28 +8,33 @@
 <div class="container">
     <h2>Create a new Account </h2>
 
-    <form method="POST" action="${context}/create_new_account"  commandName="signUpForm">
+    <form:form method="POST" action="${context}/create_new_account"  commandName="signUpForm">
         <div class="form-group">
-            <input type="text" class="form-control input-lg"  name="login" placeholder="Login" required>
+            <form:errors  class="form-control input-lg"  path="*" />
         </div>
 
         <div class="form-group">
-            <input type="text" class="form-control input-lg"  name="email" placeholder="Email" required>
+            <form:input type="text" class="form-control input-lg"  name="login" placeholder="Login" path="login"/>
         </div>
 
         <div class="form-group">
-            <input type="text" class="form-control input-lg"  name="fio" placeholder="FIO" required>
+            <form:input type="text" class="form-control input-lg"  name="email" placeholder="Email" path="email" />
         </div>
 
         <div class="form-group">
-            <input type="password" class="form-control input-lg" name="password" placeholder="Password" required>
+            <form:input type="text" class="form-control input-lg"  name="fio" placeholder="FIO" path="fio"/>
         </div>
 
         <div class="form-group">
-            <input type="password" class="form-control input-lg" name="confirm" placeholder="Confirm Password" required>
+            <form:input type="password" class="form-control input-lg" name="password" placeholder="Password" path="password" />
+        </div>
+
+        <div class="form-group">
+            <form:input type="password" class="form-control input-lg" name="confirmPass" placeholder="Confirm Password" path="confirmPass" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </div>
         <div class="form-group">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
         </div>
-    </form>
+    </form:form>
 </div>

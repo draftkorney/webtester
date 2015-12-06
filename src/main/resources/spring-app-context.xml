@@ -23,30 +23,38 @@
 
     <context:component-scan base-package="ua.alex.source.webtester.*"/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/" />
-    <mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/favicon.ico" location="/favicon.ico"/>
 
 
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
+    <mvc:annotation-driven validator="validator"/>
+
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/JSP/" />
-        <property name="suffix" value=".jsp" />
+        <property name="prefix" value="/WEB-INF/JSP/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:message" />
-        <property name="defaultEncoding" value="UTF-8" />
+        <property name="basename" value="classpath:messages/messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <mvc:annotation-driven validator="validator"/>
+
     <bean id="dataSource" class="org.postgresql.jdbc2.optional.PoolingDataSource">
-        <property name="dataSourceName" value="htppl-ds" />
-        <property name="serverName" value="${db.serverName}" />
-        <property name="databaseName" value="${db.databaseName}" />
-        <property name="user" value="${db.username}" />
-        <property name="password" value="${db.password}" />
-        <property name="initialConnections" value="10" />
-        <property name="maxConnections" value="200" />
+        <property name="dataSourceName" value="htppl-ds"/>
+        <property name="serverName" value="${db.serverName}"/>
+        <property name="databaseName" value="${db.databaseName}"/>
+        <property name="user" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="initialConnections" value="10"/>
+        <property name="maxConnections" value="200"/>
     </bean>
 
     <bean name="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -60,6 +68,15 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-
+    <mvc:interceptors>
+        <!-- locale interceptor-->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
+    <!-- Locale resolver-->
+    <bean name="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
 
 </beans>

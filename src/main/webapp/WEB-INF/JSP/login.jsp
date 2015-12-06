@@ -44,6 +44,10 @@
                 <td colspan="2" style="text-align:center;padding-top:20px;">
                     <input type="submit" value="Login"/>
                 </td>
+
+                <td colspan="2" style="text-align:center;padding-top:20px;">
+                    <a href="${context}/registration">Sign Up</a>
+                </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center;padding-top:20px;">
