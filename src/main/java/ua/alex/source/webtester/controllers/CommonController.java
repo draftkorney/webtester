@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.alex.source.webtester.ApplicationConstants;
 import ua.alex.source.webtester.controllers.AbstractController;
 import ua.alex.source.webtester.entities.Role;
@@ -25,7 +26,7 @@ import javax.validation.Valid;
 
 
 @Controller
-public class CommonControler extends AbstractController implements InitializingBean {
+public class CommonController extends AbstractController implements InitializingBean {
 
     private final Map<Integer, String> redirects = new HashMap<Integer, String>();
 
@@ -60,9 +61,15 @@ public class CommonControler extends AbstractController implements InitializingB
         return "redirect:" + redirects.get(ApplicationConstants.STUDENT_ROLE);
     }
 
+    @RequestMapping(value = "/confirmationEmail", method = RequestMethod.GET)
+    public String registration(@RequestParam String hashCode) throws InvalidUserInputException {
+        commonService.activateAccount(hashCode);
+        return "confirmemail";
+    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String showSignUp(Model model) throws InvalidUserInputException {
-        model.addAttribute("signUpForm",new SignUpForm());
+        model.addAttribute("signUpForm", new SignUpForm());
         return "registration";
     }
 

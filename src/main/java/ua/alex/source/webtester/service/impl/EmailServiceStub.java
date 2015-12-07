@@ -52,7 +52,7 @@ public class EmailServiceStub implements EmailService {
 
 		param.put("param", new HashMap<String, Object>() {{
 			this.put("firstName", user.getAccount().getFio());
-			this.put("hashCode", user.getId());
+			this.put("hashCode", user.getHash());
 			this.put("springMacroRequestContext", new RequestContext(getRequest()));
 		}});
 

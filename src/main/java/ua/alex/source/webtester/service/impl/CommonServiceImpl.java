@@ -107,6 +107,15 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
+    public void activateAccount(String hashCode) {
+        AccountRegistration accountRegistration = registrationDao.getAccountRegistrationByHash(hashCode);
+        Account account = accountRegistration.getAccount();
+        account.setConfirm(true);
+        accountDao.update(account);
+    }
+
+    @Override
     public List<Role> listAllRoles() {
         return roleDao.findAll();
     }

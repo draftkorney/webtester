@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface AccountRegistrationDao extends IEntityDao<AccountRegistration> {
 
+    AccountRegistration getAccountRegistrationByHash(String hashCode);
+
 }

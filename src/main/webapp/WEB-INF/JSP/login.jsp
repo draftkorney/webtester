@@ -16,12 +16,12 @@
                 </c:if>
             </tr>
             <tr>
-                <td><label for="j_username">Login</label></td>
-                <td><input type="text" name="j_username"/></td>
+                <td><label for="username">Login</label></td>
+                <td><input type="text" name="username"/></td>
             </tr>
             <tr>
-                <td><label for="j_password">Password</label></td>
-                <td><input type="password" name="j_password"/></td>
+                <td><label for="password">Password</label></td>
+                <td><input type="password" name="password"/></td>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </tr>
             <tr>

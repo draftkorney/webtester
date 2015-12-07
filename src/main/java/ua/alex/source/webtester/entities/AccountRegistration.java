@@ -1,6 +1,11 @@
 package ua.alex.source.webtester.entities;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Parameter;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -9,14 +14,16 @@ import java.util.UUID;
 public class AccountRegistration extends AbstractEntity {
 
     @Id
+    @GeneratedValue(generator = "gen")
+    @GenericGenerator(name = "gen", strategy = "foreign", parameters = @Parameter(name = "property", value = "account"))
     @Column(name = "id_account", unique = true, nullable = false)
-    private int idAccount;
+    private Long idAccount;
 
     @Column(name = "hash", nullable = false)
     private String hash;
 
     @OneToOne
-    @JoinColumn(name = "id_account", nullable = false, updatable = false, insertable = false)
+    @PrimaryKeyJoinColumn
     private Account account;
 
     public AccountRegistration(Account account, String uuid) {
@@ -24,11 +31,14 @@ public class AccountRegistration extends AbstractEntity {
         this.account = account;
     }
 
-    public int getIdAccount() {
+    public AccountRegistration() {
+    }
+
+    public Long getIdAccount() {
         return idAccount;
     }
 
-    public void setIdAccount(int idAccount) {
+    public void setIdAccount(Long idAccount) {
         this.idAccount = idAccount;
     }
 

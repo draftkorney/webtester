@@ -2,5 +2,6 @@
 <br/>
 #springMessage("email.body")
 <br/>
-<a href='$props.baseSite/confirmationEmail?hashCode=$hashCode'>$props.baseSite/confirmationEmail?hashCode=$hashCode</a>
+<a href="$props.baseSite/confirmationEmail?hashCode=$hashCode">$props.baseSite/confirmationEmail</a>
+<a href="google.com">gooogle</a>
 <br/>

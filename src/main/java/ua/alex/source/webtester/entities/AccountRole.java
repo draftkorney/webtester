@@ -2,10 +2,11 @@ package ua.alex.source.webtester.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.security.Timestamp;
 
 @Entity
 @Table(name = "account_role", schema = "public", catalog = "webtester")
-public class AccountRole extends ManagerEntity {
+public class AccountRole extends AbstractEntity {
 
     @Id
     @SequenceGenerator(name = "ACCOUNT_ROLE_IDACCOUNT_ROLE_GENERATOR", sequenceName = "account_role_seq",allocationSize = 1)
@@ -21,9 +22,14 @@ public class AccountRole extends ManagerEntity {
     @JoinColumn(name = "id_role", nullable = false)
     private Role role;
 
+    private Timestamp updated;
+
     public AccountRole(Account account, Role role) {
         this.account = account;
         this.role = role;
+    }
+
+    public AccountRole() {
     }
 
     public long getIdAccountRole() {
@@ -48,6 +54,14 @@ public class AccountRole extends ManagerEntity {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Timestamp getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Timestamp updated) {
+        this.updated = updated;
     }
 
     @Override

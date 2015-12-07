@@ -16,6 +16,8 @@ public interface CommonService {
 	Account signUp (SignUpForm form) throws InvalidUserInputException;
 	
 	Account login (User user) throws InvalidUserInputException;
+
+	void activateAccount(String hashCode);
 	
 	List<Role> listAllRoles();
 }
