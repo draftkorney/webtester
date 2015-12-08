@@ -10,7 +10,12 @@ public interface AccountService {
     void save(Account account);
     void update(Account account);
 
+    int countUsers();
+
     List<Account> getAll(int row, int count);
+
+    Account getByLogin(String login);
+    Account getByEmail(String email);
 
     boolean isExistField(String value, String field) throws NoSuchFieldException;
 

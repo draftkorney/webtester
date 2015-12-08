@@ -37,7 +37,7 @@ public class AuthentificationService implements UserDetailsService {
     static Collection<? extends GrantedAuthority> convert(List<AccountRole> roles) {
         Collection<SimpleGrantedAuthority> res = new ArrayList<SimpleGrantedAuthority>();
         for (AccountRole ar : roles) {
-            res.add(new SimpleGrantedAuthority(ROLES.get((int)ar.getRole().getIdRole())));
+            res.add(new SimpleGrantedAuthority(ROLES.get(ar.getRole().getIdRole())));
         }
         return res;
     }

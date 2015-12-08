@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface AccountDao extends IEntityDao<Account> {
     List<Account> getAccounts(int row, int count);
+    int countUsers();
 
     Account getByEmail(String email);
 

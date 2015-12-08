@@ -2,7 +2,7 @@ package ua.alex.source.webtester.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "account_role", schema = "public", catalog = "webtester")

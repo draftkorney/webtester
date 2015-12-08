@@ -6,4 +6,5 @@
 >
 <div class="container">
 	Hello, admin!
+	<a href="<c:url value="/admin/addNewAccount.html"/>">Add new User</a>
 </div>

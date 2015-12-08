@@ -22,7 +22,7 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, St
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         try {
-            return accountService.isExistField(value, this.fieldName);
+            return !accountService.isExistField(value, this.fieldName);
         } catch (NoSuchFieldException e) {
             throw new IllegalArgumentException("Model does not have " + this.fieldName + " field");
         }

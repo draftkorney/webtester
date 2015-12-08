@@ -8,10 +8,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.forms.NewAccount;
+import ua.alex.source.webtester.service.AccountService;
 import ua.alex.source.webtester.service.AdminService;
+import ua.alex.source.webtester.utils.PaginationData;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -20,6 +25,9 @@ public class AdminController extends AbstractController {
 
     @Autowired
     protected AdminService adminService;
+    @Autowired
+    protected AccountService accountService;
+
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home() {
@@ -27,7 +35,14 @@ public class AdminController extends AbstractController {
     }
 
     @RequestMapping(value = "/home/accountsList.html", method = RequestMethod.GET)
-    public String showAccountList() {
+    public String showAccountList(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer count, Model model) {
+        int totalCount = accountService.countUsers();
+        PaginationData paginationData = new PaginationData(totalCount, count, page);
+
+        List<Account> accountList = adminService.getUsers(paginationData.getPage(), count);
+        model.addAttribute("paginationData", paginationData);
+        model.addAttribute("users", accountList);
+
         return "admin/accountsList";
     }
 
@@ -45,7 +60,7 @@ public class AdminController extends AbstractController {
         }
 
         adminService.addNewAccount(newAccount);
-        return "admin/accountsList";
+        return "redirect:/admin/home/accountsList.html";
     }
 
 
