@@ -12,4 +12,6 @@ public interface AccountService {
 
     List<Account> getAll(int row, int count);
 
+    boolean isExistField(String value, String field) throws NoSuchFieldException;
+
 }

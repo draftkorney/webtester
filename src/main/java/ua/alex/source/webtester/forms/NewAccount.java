@@ -1,32 +1,39 @@
 package ua.alex.source.webtester.forms;
 
-
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import ua.alex.source.webtester.validations.Unique;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
-public class SignUpForm extends AbstractLoginForm implements IForm {
-    private static final long serialVersionUID = -3633827335080843887L;
+public class NewAccount implements IForm {
 
-    @NotNull()
-
+    @NotEmpty
     @Size(min = 6, max = 60)
-    private String confirmPass;
+    @Unique(fieldName = "login")
+    private String login;
 
-    @NotNull
+    @NotEmpty
     @Size(min = 6, max = 60)
-    @Email
     @Unique(fieldName = "email")
+    @Email
     private String email;
 
-    @NotNull
+    @NotEmpty
     @Size(min = 6, max = 200)
     private String fio;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    @NotNull
+    private List<Integer> roles;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {
@@ -45,13 +52,11 @@ public class SignUpForm extends AbstractLoginForm implements IForm {
         this.fio = fio;
     }
 
-    public String getConfirmPass() {
-        return confirmPass;
+    public List<Integer> getRoles() {
+        return roles;
     }
 
-    public void setConfirmPass(String confirmPass) {
-        this.confirmPass = confirmPass;
+    public void setRoles(List<Integer> roles) {
+        this.roles = roles;
     }
-
-
 }

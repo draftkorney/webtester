@@ -27,72 +27,93 @@ import java.util.Map;
 @Service("emailService")
 public class EmailServiceStub implements EmailService {
 
-	@Autowired
-	private JavaMailSender sender;
+    @Autowired
+    private JavaMailSender sender;
 
-	@Autowired
-	private VelocityEngine velocityEngine;
+    @Autowired
+    private VelocityEngine velocityEngine;
 
-	@Autowired
-	private MessageSource messageSource;
+    @Autowired
+    private MessageSource messageSource;
 
-	@Autowired
-	private ApplicationProps props;
+    @Autowired
+    private ApplicationProps props;
 
-	@Value("${mail.user.from}")
-	private String fromEmail;
+    @Value("${mail.user.from}")
+    private String fromEmail;
 
-	@Override
-	public void sendVerificationEmail(final AccountRegistration user) {
-		String templateBodyLocation = "template/registration.vm";
+    @Override
+    public void sendVerificationEmail(final AccountRegistration user) {
+        String templateBodyLocation = "template/registration.vm";
 
-		String title = messageSource.getMessage("registration.header", new Object[]{}, getLocale());
+        String title = messageSource.getMessage("registration.header", new Object[]{}, getLocale());
 
-		Map<String, Object> param = new HashMap<>();
+        Map<String, Object> param = new HashMap<>();
 
-		param.put("param", new HashMap<String, Object>() {{
-			this.put("firstName", user.getAccount().getFio());
-			this.put("hashCode", user.getHash());
-			this.put("springMacroRequestContext", new RequestContext(getRequest()));
-		}});
+        param.put("param", new HashMap<String, Object>() {{
+            this.put("firstName", user.getAccount().getFio());
+            this.put("hashCode", user.getHash());
+            this.put("springMacroRequestContext", new RequestContext(getRequest()));
+        }});
 
-		param.put("pathTemplate", templateBodyLocation);
-		param.put("subject", title);
+        param.put("pathTemplate", templateBodyLocation);
+        param.put("subject", title);
 
-		sendEmail(param, fromEmail, user.getAccount().getEmail());
-	}
+        sendEmail(param, fromEmail, user.getAccount().getEmail());
+    }
 
-	@Override
-	public void sendGeneratedPasswordToEmail() {
-		//Do nothing
-	}
+    @Override
+    public void confirmNewUser(Account account) {
+        String templateBodyLocation = "template/sendpassword.vm";
 
-	private void sendEmail(Map<String, Object> param, String from, String... to) {
-		if (to == null) return;
+        String title = messageSource.getMessage("registration.header", new Object[]{}, getLocale());
 
-		MimeMessagePreparator preparator = mimeMessage -> {
-			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-			message.setTo(to);
-			message.setFrom(from); // could be parameterized...
-			message.setSubject((String) param.get("subject"));
+        Map<String, Object> param = new HashMap<>();
 
-			Map<String, Object> map = (Map<String, Object>) param.get("param");
-			map.put("props", props);
+        param.put("param", new HashMap<String, Object>() {{
+            this.put("login", account.getLogin());
+            this.put("firstName", account.getFio());
+            this.put("password", account.getPassword());
+            this.put("springMacroRequestContext", new RequestContext(getRequest()));
+        }});
 
-			String text = VelocityEngineUtils.mergeTemplateIntoString(
-					velocityEngine, (String) param.get("pathTemplate"), "UTF-8", map);
-			message.setText(text, true);
-		};
+        param.put("pathTemplate", templateBodyLocation);
+        param.put("subject", title);
 
-		this.sender.send(preparator);
-	}
+        sendEmail(param, fromEmail, account.getEmail());
+    }
 
-	private Locale getLocale() {
-		return LocaleContextHolder.getLocale();
-	}
+    @Override
+    public void sendGeneratedPasswordToEmail() {
 
-	private HttpServletRequest getRequest(){
-		ServletRequestAttributes sra = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes());
-		return  sra.getRequest();
-	}
+    }
+
+    private void sendEmail(Map<String, Object> param, String from, String... to) {
+        if (to == null) return;
+
+        MimeMessagePreparator preparator = mimeMessage -> {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            message.setTo(to);
+            message.setFrom(from); // could be parameterized...
+            message.setSubject((String) param.get("subject"));
+
+            Map<String, Object> map = (Map<String, Object>) param.get("param");
+            map.put("props", props);
+
+            String text = VelocityEngineUtils.mergeTemplateIntoString(
+                    velocityEngine, (String) param.get("pathTemplate"), "UTF-8", map);
+            message.setText(text, true);
+        };
+
+        this.sender.send(preparator);
+    }
+
+    private Locale getLocale() {
+        return LocaleContextHolder.getLocale();
+    }
+
+    private HttpServletRequest getRequest() {
+        ServletRequestAttributes sra = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes());
+        return sra.getRequest();
+    }
 }

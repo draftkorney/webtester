@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.service.AccountService;
+import ua.alex.source.webtester.utils.ReflectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,5 +30,11 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public List<Account> getAll(int row, int count) {
         return accountDao.getAccounts(0, 10);
+    }
+
+    @Override
+    public boolean isExistField(String value, String field) throws NoSuchFieldException {
+        ReflectionUtils.getAccessibleField(Account.class, field);
+        return accountDao.isExistValueField(value, field);
     }
 }

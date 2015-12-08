@@ -2,7 +2,6 @@ package ua.alex.source.webtester.dao.impl;
 
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.entities.Account;
 
@@ -24,6 +23,11 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
     @Override
     public Account getByLogin(String login) {
         return (Account) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("login", login)).uniqueResult();
+    }
+
+    @Override
+    public boolean isExistValueField(String value, String field) {
+        return getSession().createCriteria(getEntityClass()).add(Restrictions.eq(field, value)).list().size() > 0;
     }
 
     @Override

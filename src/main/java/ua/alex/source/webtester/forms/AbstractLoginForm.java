@@ -2,8 +2,8 @@ package ua.alex.source.webtester.forms;
 
 
 import org.hibernate.validator.constraints.NotEmpty;
+import ua.alex.source.webtester.validations.Unique;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class AbstractLoginForm implements IForm {
@@ -11,6 +11,7 @@ public class AbstractLoginForm implements IForm {
 
     @NotEmpty(message = "{form.login.null}")
     @Size(min = 1, max = 60, message = "form.login.invalid.size")
+    @Unique(fieldName = "login")
     private String login;
 
     @NotEmpty(message = "form.password.null")

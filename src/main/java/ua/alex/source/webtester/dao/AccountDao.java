@@ -12,4 +12,6 @@ public interface AccountDao extends IEntityDao<Account> {
 
     Account getByLogin(String login);
 
+    boolean isExistValueField(String value, String field);
+
 }
