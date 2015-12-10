@@ -16,8 +16,14 @@
             <c:forEach items="questions" var="question">
                 <div>${question.name}</div>
                 <span><a href="<c:url value="${tutor}/editQuestion.html?idQuestion=${question.idQuestion}"/>">Edit</a></span> <span>delete</span>
+                <c:if test="question.answers.size ls 4">
+                    <div><a href="<c:url value="${tutor}/addAnswer.html"/>">Add a new answer</a></div>
+                </c:if>
+
                 <c:forEach items="questions.answers" var="answer">
                     <div>
+                        <a href="<c:url value="${tutor}/editAnswer.html?idAnswer=${answer.idAnswer}"/>">edit</a>
+                        <a href="<c:url value="${tutor}/deleteAnswer.html?idAnswer=${answer.idAnswer}"/>">delete</a>
                         <c:choose>
                             <c:when test="answer.correct">
                                 <strong>${answer.name}</strong>

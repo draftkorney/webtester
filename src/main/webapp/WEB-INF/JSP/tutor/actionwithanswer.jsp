@@ -13,14 +13,15 @@
             </div>
 
             <div class="form-group">
+                <form:checkbox path="correct" name="correct"/>
                 <form:input type="text" class="form-control input-lg" name="name" placeholder="name" path="name"/>
             </div>
 
             <div class="form-group">
-                <form:hidden type="hidden" class="form-control input-lg" name="account" placeholder="account"
-                             path="test"/>
-                <form:hidden type="hidden" class="form-control input-lg" name="account" placeholder="account"
-                             path="idQuestion"/>
+                <form:hidden type="hidden" class="form-control input-lg" name="question"
+                             path="question"/>
+                <form:hidden type="hidden" class="form-control input-lg" name="answer"
+                             path="idAnswer"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
 
