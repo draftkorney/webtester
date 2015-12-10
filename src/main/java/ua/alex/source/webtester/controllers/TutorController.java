@@ -12,6 +12,7 @@ import ua.alex.source.webtester.entities.Test;
 import ua.alex.source.webtester.forms.TestForm;
 import ua.alex.source.webtester.security.SecurityUtils;
 import ua.alex.source.webtester.utils.PaginationData;
+import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -36,7 +37,7 @@ public class TutorController extends AbstractTutorController {
             test = tutorService.getTestById(idTest);
         }
 
-        model.addAttribute("test", test);
+        model.addAttribute("testForm", test);
         return "tutor/actionwithtest";
     }
 
@@ -65,6 +66,20 @@ public class TutorController extends AbstractTutorController {
     }
 
 
+    @RequestMapping(value = {"/editQuestion.html", "/addQuestion.html"}, method = RequestMethod.GET)
+    public String editQuestionPage(@RequestParam Long idQuestion, Model model) {
+        QuestionWrapper question;
+
+        if (idQuestion == null) {
+            question = new QuestionWrapper();
+        } else {
+            question = tutorService.getQuestionById(idQuestion);
+        }
+
+        model.addAttribute("questionForm", question);
+        return "tutor/actionwithtest";
+    }
+
     @RequestMapping(value = "/action_with_test", method = RequestMethod.POST)
     public String actionWithTest(@Valid @ModelAttribute TestForm testForm, BindingResult result, Model model) {
 
@@ -76,11 +91,24 @@ public class TutorController extends AbstractTutorController {
         return "redirect:/home/testslist.html";
     }
 
+    @RequestMapping(value = "/action_with_question", method = RequestMethod.POST)
+    public String actionWithQuestion(@Valid @ModelAttribute QuestionForm questionForm, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            return "tutor/actionwithquestion";
+        }
+
+        tutorService.saveOrUpdateQuestion(questionForm);
+        return "redirect:/home/testslist.html";
+    }
+
     @RequestMapping(value = "/delete_test", method = RequestMethod.POST)
     public String deleteTest(@RequestParam Long idTest) {
         tutorService.deleteTest(idTest);
         return "redirect:/home/testslist.html";
     }
+
+
 
 
 }

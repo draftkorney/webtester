@@ -11,6 +11,7 @@ import ua.alex.source.webtester.entities.Test;
 import ua.alex.source.webtester.forms.TestForm;
 import ua.alex.source.webtester.service.TutorService;
 import ua.alex.source.webtester.utils.ReflectionUtils;
+import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -69,6 +70,14 @@ public class TutorServiceImpl implements TutorService {
     @Override
     public int countQuestionsByTestId(long testId) {
         return questionDao.countQuestionsByTestId(testId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public QuestionWrapper getQuestionById(Long idQuestion) {
+        Question question = questionDao.getById(idQuestion);
+        QuestionWrapper questionWrapper = new QuestionWrapper(question, question.getAnswers());
+        return questionWrapper;
     }
 
     @Override

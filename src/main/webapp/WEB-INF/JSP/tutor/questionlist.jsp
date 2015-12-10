@@ -3,16 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:set var="testPagination" value="questionPaginationData" scope="session"/>
+<c:set var="questionPagination" value="questionPaginationData" scope="session"/>
+
+<%--@elvariable id="question" type="ua.alex.source.webtester.entities.Question"--%>
+<%--@elvariable id="answer" type="ua.alex.source.webtester.entities.Answer"--%>
 
 <div class="container">
     <div class="tests-content">
-        <div><a href="<c:url value="/addQuestion.html"/>">Add a new question</a></div>
+        <div><a href="<c:url value="${tutor}/addQuestion.html"/>">Add a new question</a></div>
 
         <div class="">
             <c:forEach items="questions" var="question">
                 <div>${question.name}</div>
-                <span>edit</span> <span>delete</span>
+                <span><a href="<c:url value="${tutor}/editQuestion.html?idQuestion=${question.idQuestion}"/>">Edit</a></span> <span>delete</span>
                 <c:forEach items="questions.answers" var="answer">
                     <div>
                         <c:choose>

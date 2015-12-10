@@ -5,9 +5,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="testPagination" value="testPaginationData" scope="session"/>
 
+<%--@elvariable id="test" type="ua.alex.source.webtester.entities.Test"--%>
+
 <div class="container">
     <div class="tests-content">
-        <div><a href="<c:url value="/createTest.html"/>">Add a new test</a></div>
+        <div><a href="<c:url value="${tutor}/createTest.html"/>">Add a new test</a></div>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -26,9 +28,9 @@
                         <td>${test.name}</td>
                         <td>${test.description}</td>
                         <td>${test.timePerQuestion}</td>
-                        <td><a href="<c:url value="/questions.html?idTest=${test.id}"/>">Questions</a></td>
-                        <td><a href="<c:url value="/editTest.html?idTest=${test.id}"/>">Edit</a></td>
-                        <td><a href="<c:url value="/delete_test?idTest=${test.id}"/>">Delete</a></td>
+                        <td><a href="<c:url value="${tutor}/home/questions.html?idTest=${test.idTest}"/>">Questions</a></td>
+                        <td><a href="<c:url value="${tutor}/editTest.html?idTest=${test.idTest}"/>">Edit</a></td>
+                        <td><a href="<c:url value="${tutor}/delete_test?idTest=${test.idTest}"/>">Delete</a></td>
                     </c:forEach>
                 </tr>
                 </tbody>

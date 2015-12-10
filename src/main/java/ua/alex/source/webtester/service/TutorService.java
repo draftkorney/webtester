@@ -4,6 +4,7 @@ package ua.alex.source.webtester.service;
 import ua.alex.source.webtester.entities.Question;
 import ua.alex.source.webtester.entities.Test;
 import ua.alex.source.webtester.forms.TestForm;
+import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface TutorService {
     void deleteTest(Long idTest);
 
     int countQuestionsByTestId(long testId);
+
+    QuestionWrapper getQuestionById(Long idQuestion);
 }
