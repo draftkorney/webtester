@@ -2,6 +2,7 @@ package ua.alex.source.webtester.forms;
 
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import ua.alex.source.webtester.entities.Account;
 
 import javax.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ public class TestForm implements IForm {
     private String description;
 
     @NotNull
-    @Size(min = 6, max = 60)
+    @Range(min = 30)
     private Integer timePerQuestion;
 
     @NotNull

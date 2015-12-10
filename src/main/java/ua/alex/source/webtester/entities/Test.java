@@ -7,10 +7,10 @@ import java.io.Serializable;
 public class Test extends ManagerEntity {
 
     @Id
-    @SequenceGenerator(name = "TEST_IDTEST_GENERATOR", sequenceName = "test_seq",allocationSize = 1)
+    @SequenceGenerator(name = "TEST_IDTEST_GENERATOR", sequenceName = "test_seq", allocationSize = 1)
     @GeneratedValue(generator = "TEST_IDTEST_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_test", nullable = false, unique = true)
-    private long idTest;
+    private Long idTest;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;
@@ -22,14 +22,14 @@ public class Test extends ManagerEntity {
     private int timePerQuestion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_account",nullable = false)
+    @JoinColumn(name = "id_account", nullable = false)
     private Account account;
 
-    public long getIdTest() {
+    public Long getIdTest() {
         return idTest;
     }
 
-    public void setIdTest(long idTest) {
+    public void setIdTest(Long idTest) {
         this.idTest = idTest;
     }
 

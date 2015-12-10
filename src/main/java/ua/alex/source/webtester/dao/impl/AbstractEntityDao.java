@@ -41,7 +41,7 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
 
     @Override
     public void deleteById(Serializable id) {
-        String q = "DELETE  FROM " + getEntityClass() + " clazz WHERE clazz.d = :id ";
+        String q = "DELETE  FROM " + getEntityClass().getSimpleName() + " clazz WHERE clazz.id = :id ";
         getSession().createQuery(q).setParameter("id", id).executeUpdate();
     }
 }

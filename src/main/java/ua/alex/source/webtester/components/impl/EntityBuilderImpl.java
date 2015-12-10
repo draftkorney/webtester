@@ -38,4 +38,18 @@ public class EntityBuilderImpl implements EntityBuilder {
         test.setCreated(new Timestamp(System.currentTimeMillis()));
         return test;
     }
+
+    @Override
+    public Question buildQuestion() {
+        Question question = new Question();
+        question.setCreated(new Timestamp(System.currentTimeMillis()));
+        return question;
+    }
+
+    @Override
+    public Answer buildAnswer() {
+        Answer answer = new Answer();
+        answer.setCreated(new Timestamp(System.currentTimeMillis()));
+        return answer;
+    }
 }

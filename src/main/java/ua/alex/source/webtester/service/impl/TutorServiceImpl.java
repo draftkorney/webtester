@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.alex.source.webtester.components.EntityBuilder;
+import ua.alex.source.webtester.dao.AnswerDao;
 import ua.alex.source.webtester.dao.QuestionDao;
 import ua.alex.source.webtester.dao.TestDao;
+import ua.alex.source.webtester.entities.Answer;
 import ua.alex.source.webtester.entities.Question;
 import ua.alex.source.webtester.entities.Test;
+import ua.alex.source.webtester.forms.AnswerForm;
+import ua.alex.source.webtester.forms.QuestionForm;
 import ua.alex.source.webtester.forms.TestForm;
 import ua.alex.source.webtester.service.TutorService;
 import ua.alex.source.webtester.utils.ReflectionUtils;
@@ -25,6 +29,9 @@ public class TutorServiceImpl implements TutorService {
 
     @Autowired
     private QuestionDao questionDao;
+
+    @Autowired
+    private AnswerDao answerDao;
 
     @Autowired
     private EntityBuilder entityBuilder;
@@ -74,14 +81,56 @@ public class TutorServiceImpl implements TutorService {
 
     @Override
     @Transactional(readOnly = true)
-    public QuestionWrapper getQuestionById(Long idQuestion) {
-        Question question = questionDao.getById(idQuestion);
-        QuestionWrapper questionWrapper = new QuestionWrapper(question, question.getAnswers());
-        return questionWrapper;
+    public Question getQuestionById(Long idQuestion) {
+        return questionDao.getById(idQuestion);
     }
 
     @Override
     public List<Question> getQuestionByTestId(int page, Integer count, long idTest) {
         return questionDao.getQuestionByTestId(page, count, idTest);
+    }
+
+    @Override
+    @Transactional(readOnly = false, rollbackFor = {RuntimeException.class})
+    public void saveOrUpdateQuestion(QuestionForm questionForm) {
+
+        Question question;
+
+        final Long idQuestion = questionForm.getIdQuestion();
+
+        if (idQuestion == null) {
+            question = entityBuilder.buildQuestion();
+        } else {
+            question = questionDao.getById(idQuestion);
+            question.setUpdated(new Timestamp(System.currentTimeMillis()));
+        }
+
+        ReflectionUtils.copyByFields(question, questionForm);
+        questionDao.save(question);
+
+    }
+
+    @Override
+    public Answer getAnswerById(Long idAnswer) {
+        return answerDao.getById(idAnswer);
+    }
+
+    @Override
+    @Transactional(readOnly = false, rollbackFor = {RuntimeException.class})
+    public void saveOrUpdateAnswer(AnswerForm answerForm) {
+        Answer answer;
+
+        final Long idAnswer = answerForm.getIdAnswer();
+
+        if (idAnswer == null) {
+            answer = entityBuilder.buildAnswer();
+        } else {
+            answer = answerDao.getById(idAnswer);
+            answer.setUpdated(new Timestamp(System.currentTimeMillis()));
+        }
+
+        ReflectionUtils.copyByFields(answer, answerForm);
+
+        answerDao.save(answer);
     }
 }

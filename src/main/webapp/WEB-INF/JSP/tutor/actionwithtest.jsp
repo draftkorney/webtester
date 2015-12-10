@@ -28,9 +28,9 @@
             </div>
 
             <div class="form-group">
-                <form:hidden type="hidden" class="form-control input-lg" name="account" placeholder="account"
-                             path="account"/>
-                <form:hidden type="hidden" class="form-control input-lg" name="account" placeholder="account"
+                <form:hidden class="form-control input-lg" name="account" placeholder="account"
+                             path="account.idAccount"/>
+                <form:hidden class="form-control input-lg" name="account" placeholder="account"
                              path="idTest"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>

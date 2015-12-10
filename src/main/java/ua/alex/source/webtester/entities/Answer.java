@@ -12,7 +12,7 @@ public class Answer extends ManagerEntity {
     @SequenceGenerator(name = "ANSWER_IDANSWER_GENERATOR", sequenceName = "answer_seq",allocationSize = 1)
     @GeneratedValue(generator = "ANSWER_IDANSWER_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_answer")
-    private long idAnswer;
+    private Long idAnswer;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;
@@ -33,11 +33,11 @@ public class Answer extends ManagerEntity {
         this.question = question;
     }
 
-    public long getIdAnswer() {
+    public Long getIdAnswer() {
         return idAnswer;
     }
 
-    public void setIdAnswer(long idAnswer) {
+    public void setIdAnswer(Long idAnswer) {
         this.idAnswer = idAnswer;
     }
 

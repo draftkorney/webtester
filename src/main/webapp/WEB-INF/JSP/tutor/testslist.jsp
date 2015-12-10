@@ -3,7 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:set var="testPagination" value="testPaginationData" scope="session"/>
+<%@ taglib prefix="paginations" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="testPagination" value="${testPaginationData}" scope="session"/>
+<c:set var="url" value="${tutor}/home/testslist.html"/>
 
 <%--@elvariable id="test" type="ua.alex.source.webtester.entities.Test"--%>
 
@@ -23,21 +26,33 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <c:forEach items="tests" var="test">
+                <c:forEach var="test" items="${tests}">
+                    <tr>
                         <td>${test.name}</td>
                         <td>${test.description}</td>
                         <td>${test.timePerQuestion}</td>
-                        <td><a href="<c:url value="${tutor}/home/questions.html?idTest=${test.idTest}"/>">Questions</a></td>
+                        <td><a href="<c:url value="${tutor}/home/questions.html?idTest=${test.idTest}"/>">Questions</a>
+                        </td>
                         <td><a href="<c:url value="${tutor}/editTest.html?idTest=${test.idTest}"/>">Edit</a></td>
-                        <td><a href="<c:url value="${tutor}/delete_test?idTest=${test.idTest}"/>">Delete</a></td>
-                    </c:forEach>
-                </tr>
+                        <td>
+                            <form id="actionForm" action="${tutor}/delete_test" name="action" method="POST">
+                                <input type="hidden" name="idTest" value="${test.idTest}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
 
     </div>
 
+    <paginations:paginations paginationData="${testPagination}" url="${url}"/>
 
 </div>
+<script>
+    $(document).ready(function () {
+    });
+</script>

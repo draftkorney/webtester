@@ -6,4 +6,5 @@
 <c:set var="tutor" value="/tutor" scope="application"/>
 <div class="container">
 	Hello, tutor!
+	<a href="<c:url value="${tutor}/home/testslist.html"/>">Tests</a>
 </div>

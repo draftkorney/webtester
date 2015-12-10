@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="paginations" tagdir="/WEB-INF/tags" %>
 
 <c:set var="url" value="/admin/home/accountsList.html"/>
 
@@ -18,7 +19,8 @@
           ${user.email}
       </div>
     </c:forEach>
-
   </div>
+
+    <paginations:paginations paginationData="${adminPaginationData}" url="${url}" />
 
 </div>

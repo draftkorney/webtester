@@ -11,4 +11,8 @@ public interface EntityBuilder {
 
 	AccountRegistration buildAccountRegistration(Account account);
 	Test buildTest();
+
+	Question buildQuestion();
+
+	Answer buildAnswer();
 }

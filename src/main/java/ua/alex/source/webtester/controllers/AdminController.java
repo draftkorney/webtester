@@ -40,10 +40,10 @@ public class AdminController extends AbstractController {
         PaginationData paginationData = new PaginationData(totalCount, count, page);
 
         List<Account> accountList = adminService.getUsers(paginationData.getPage(), count);
-        model.addAttribute("paginationData", paginationData);
+        model.addAttribute("adminPaginationData", paginationData);
         model.addAttribute("users", accountList);
 
-        return "admin/accountsList";
+        return "admin/accountList";
     }
 
     @RequestMapping(value = "/addNewAccount.html", method = RequestMethod.GET)

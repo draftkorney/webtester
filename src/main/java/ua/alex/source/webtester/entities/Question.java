@@ -11,7 +11,7 @@ public class Question extends ManagerEntity {
     @SequenceGenerator(name = "QUESTION_IDQUESTION_GENERATOR", sequenceName = "question_seq", allocationSize = 1)
     @GeneratedValue(generator = "QUESTION_IDQUESTION_GENERATOR", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_question", nullable = false, unique = true)
-    private long idQuestion;
+    private Long idQuestion;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;
@@ -27,7 +27,7 @@ public class Question extends ManagerEntity {
         this.idQuestion = idQuestion;
     }
 
-    public long getIdQuestion() {
+    public Long getIdQuestion() {
         return idQuestion;
     }
 

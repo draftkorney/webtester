@@ -18,16 +18,18 @@
             </div>
 
             <div class="form-group">
-                <form:hidden type="hidden" class="form-control input-lg" name="question"
-                             path="question"/>
-                <form:hidden type="hidden" class="form-control input-lg" name="answer"
+                <form:hidden  class="form-control input-lg" name="question"
+                             path="question.idQuestion"/>
+                <form:hidden  class="form-control input-lg" name="question"
+                             path="question.test.idTest"/>
+                <form:hidden  class="form-control input-lg" name="answer"
                              path="idAnswer"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
 
             <div class="form-group">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
-                <a href="<c:url value="${tutor}/home/questions.html?page=${questionPaginationData.page}"/>">Cancel</a>
+                <a href="<c:url value="${tutor}/home/questions.html?page=${questionPaginationData.page}&idQuestion=${answerForm.question.idQuestion}&idTest=${answerForm.question.test.idTest}"/>">Cancel</a>
             </div>
         </form:form>
 

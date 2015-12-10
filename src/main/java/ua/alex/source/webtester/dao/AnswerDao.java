@@ -1,5 +1,7 @@
 package ua.alex.source.webtester.dao;
 
 
-public interface AnswerDao {
+import ua.alex.source.webtester.entities.Answer;
+
+public interface AnswerDao extends IEntityDao<Answer> {
 }

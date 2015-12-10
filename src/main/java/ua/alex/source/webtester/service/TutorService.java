@@ -1,8 +1,11 @@
 package ua.alex.source.webtester.service;
 
 
+import ua.alex.source.webtester.entities.Answer;
 import ua.alex.source.webtester.entities.Question;
 import ua.alex.source.webtester.entities.Test;
+import ua.alex.source.webtester.forms.AnswerForm;
+import ua.alex.source.webtester.forms.QuestionForm;
 import ua.alex.source.webtester.forms.TestForm;
 import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
@@ -24,5 +27,11 @@ public interface TutorService {
 
     int countQuestionsByTestId(long testId);
 
-    QuestionWrapper getQuestionById(Long idQuestion);
+    Question getQuestionById(Long idQuestion);
+
+    void saveOrUpdateQuestion(QuestionForm questionForm);
+
+    Answer getAnswerById(Long idAnswer);
+
+    void saveOrUpdateAnswer(AnswerForm answerForm);
 }
