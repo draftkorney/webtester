@@ -1,10 +1,7 @@
 package ua.alex.source.webtester.components;
 
 
-import ua.alex.source.webtester.entities.Account;
-import ua.alex.source.webtester.entities.AccountRegistration;
-import ua.alex.source.webtester.entities.AccountRole;
-import ua.alex.source.webtester.entities.Role;
+import ua.alex.source.webtester.entities.*;
 
 public interface EntityBuilder {
 
@@ -13,4 +10,5 @@ public interface EntityBuilder {
 	AccountRole buildAccountRole(Account account, Role role);
 
 	AccountRegistration buildAccountRegistration(Account account);
+	Test buildTest();
 }

@@ -1,4 +1,11 @@
 package ua.alex.source.webtester.dao;
 
-public interface QuestionDao {
+import ua.alex.source.webtester.entities.Question;
+
+import java.util.List;
+
+public interface QuestionDao extends IEntityDao<Question> {
+    int countQuestionsByTestId(long testId);
+
+    List<Question> getQuestionByTestId(int row, int count, Long idTest);
 }

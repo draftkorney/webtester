@@ -1,7 +1,14 @@
 package ua.alex.source.webtester.dao;
 
-/**
- * Created by Alex-II on 06.11.2015.
- */
-public interface TestDao {
+import ua.alex.source.webtester.entities.Test;
+
+import java.util.List;
+
+public interface TestDao extends IEntityDao<Test> {
+
+    int getCountTestsByAccountId(Long idAccount);
+
+    List<Test> getTestByAccountId(int row, int count, Long idAccount);
+
+
 }

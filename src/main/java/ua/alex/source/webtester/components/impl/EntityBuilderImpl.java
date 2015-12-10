@@ -1,14 +1,11 @@
 package ua.alex.source.webtester.components.impl;
 
-import java.sql.Timestamp;
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 import ua.alex.source.webtester.components.EntityBuilder;
-import ua.alex.source.webtester.entities.Account;
-import ua.alex.source.webtester.entities.AccountRegistration;
-import ua.alex.source.webtester.entities.AccountRole;
-import ua.alex.source.webtester.entities.Role;
+import ua.alex.source.webtester.entities.*;
+
+import java.sql.Timestamp;
+import java.util.UUID;
 
 /**
  * @author nedis
@@ -33,5 +30,12 @@ public class EntityBuilderImpl implements EntityBuilder {
     @Override
     public AccountRegistration buildAccountRegistration(Account account) {
         return new AccountRegistration(account, UUID.randomUUID().toString());
+    }
+
+    @Override
+    public Test buildTest() {
+        Test test = new Test();
+        test.setCreated(new Timestamp(System.currentTimeMillis()));
+        return test;
     }
 }
