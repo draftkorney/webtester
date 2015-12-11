@@ -1,9 +1,7 @@
 package ua.alex.source.webtester.entities;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Entity
 public class Answer extends ManagerEntity {

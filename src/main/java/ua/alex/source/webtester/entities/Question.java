@@ -31,11 +31,6 @@ public class Question extends ManagerEntity {
         return idQuestion;
     }
 
-    public void setIdQuestion(long idQuestion) {
-        this.idQuestion = idQuestion;
-    }
-
-
     public String getName() {
         return name;
     }

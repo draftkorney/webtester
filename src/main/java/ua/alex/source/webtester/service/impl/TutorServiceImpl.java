@@ -15,7 +15,6 @@ import ua.alex.source.webtester.forms.QuestionForm;
 import ua.alex.source.webtester.forms.TestForm;
 import ua.alex.source.webtester.service.TutorService;
 import ua.alex.source.webtester.utils.ReflectionUtils;
-import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -132,5 +131,15 @@ public class TutorServiceImpl implements TutorService {
         ReflectionUtils.copyByFields(answer, answerForm);
 
         answerDao.save(answer);
+    }
+
+    @Override
+    public void deleteQuestion(Long idQuestion) {
+        questionDao.deleteById(idQuestion);
+    }
+
+    @Override
+    public void deleteAnswer(Long idAnswer) {
+        answerDao.deleteById(idAnswer);
     }
 }

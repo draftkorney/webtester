@@ -7,7 +7,6 @@ import ua.alex.source.webtester.entities.Test;
 import ua.alex.source.webtester.forms.AnswerForm;
 import ua.alex.source.webtester.forms.QuestionForm;
 import ua.alex.source.webtester.forms.TestForm;
-import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
 import java.util.List;
 
@@ -34,4 +33,8 @@ public interface TutorService {
     Answer getAnswerById(Long idAnswer);
 
     void saveOrUpdateAnswer(AnswerForm answerForm);
+
+    void deleteQuestion(Long idQuestion);
+
+    void deleteAnswer(Long idAnswer);
 }

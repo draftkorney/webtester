@@ -1,10 +1,5 @@
 package ua.alex.source.webtester.controllers;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.alex.source.webtester.ApplicationConstants;
-import ua.alex.source.webtester.controllers.AbstractController;
 import ua.alex.source.webtester.entities.Role;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
 import ua.alex.source.webtester.forms.SignUpForm;
@@ -23,6 +16,10 @@ import ua.alex.source.webtester.security.CurrentAccount;
 import ua.alex.source.webtester.security.SecurityUtils;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -76,6 +73,11 @@ public class CommonController extends AbstractController implements Initializing
     @RequestMapping(value = {"/myInfo"}, method = RequestMethod.GET)
     public String myInfo(Model model) {
         CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
-        return "redirect:" + redirects.get(currentAccount.getRole());
+        return "redirect:" + getHomeUrl(currentAccount.getRoles());
+    }
+
+    private String getHomeUrl(List<Integer> roles) {
+        Collections.sort(roles);
+        return redirects.get(roles.get(0));
     }
 }

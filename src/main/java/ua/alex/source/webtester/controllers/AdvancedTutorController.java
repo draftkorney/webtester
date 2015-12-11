@@ -13,4 +13,6 @@ public class AdvancedTutorController extends AbstractTutorController {
 	public String home(){
 		return "advanced_tutor/home";
 	}
+
+
 }

@@ -16,7 +16,6 @@ import ua.alex.source.webtester.forms.QuestionForm;
 import ua.alex.source.webtester.forms.TestForm;
 import ua.alex.source.webtester.security.SecurityUtils;
 import ua.alex.source.webtester.utils.PaginationData;
-import ua.alex.source.webtester.wrappers.QuestionWrapper;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,23 +28,6 @@ public class TutorController extends AbstractTutorController {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home() {
         return "tutor/home";
-    }
-
-    @RequestMapping(value = {"/editTest.html", "/createTest.html"}, method = RequestMethod.GET)
-    public String editTestPage(@RequestParam(required = false) Long idTest, Model model) {
-        Test test;
-
-        if (idTest == null) {
-            test = new Test();
-            Account account = new Account();
-            account.setIdAccount(SecurityUtils.getCurrentIdAccount());
-            test.setAccount(account);
-        } else {
-            test = tutorService.getTestById(idTest);
-        }
-
-        model.addAttribute("testForm", test);
-        return "tutor/actionwithtest";
     }
 
     @RequestMapping(value = "/home/testslist.html", method = RequestMethod.GET)
@@ -74,15 +56,29 @@ public class TutorController extends AbstractTutorController {
     }
 
 
+    @RequestMapping(value = {"/editTest.html", "/createTest.html"}, method = RequestMethod.GET)
+    public String editTestPage(@RequestParam(required = false) Long idTest, Model model) {
+        Test test;
+
+        if (idTest == null) {
+            test = new Test();
+            Account account = new Account();
+            account.setIdAccount(SecurityUtils.getCurrentIdAccount());
+            test.setAccount(account);
+        } else {
+            test = tutorService.getTestById(idTest);
+        }
+
+        model.addAttribute("testForm", test);
+        return "tutor/actionwithtest";
+    }
+
     @RequestMapping(value = {"/editQuestion.html", "/addQuestion.html"}, method = RequestMethod.GET)
     public String editQuestionPage(@RequestParam(required = false) Long idQuestion, @RequestParam Long idTest, Model model) {
         Question question;
 
         if (idQuestion == null) {
-            question = new Question();
-            Test test = new Test();
-            test.setIdTest(idTest);
-            question.setTest(test);
+            question = initQuestion(idTest);
         } else {
             question = tutorService.getQuestionById(idQuestion);
         }
@@ -97,13 +93,7 @@ public class TutorController extends AbstractTutorController {
         Answer answer;
 
         if (idAnswer == null) {
-            answer = new Answer();
-            Question question = new Question();
-            question.setIdQuestion(idQuestion);
-            Test test = new Test();
-            test.setIdTest(idTest);
-            question.setTest(test);
-            answer.setQuestion(question);
+            answer = initAnswer(idQuestion, idTest);
         } else {
             answer = tutorService.getAnswerById(idAnswer);
         }
@@ -149,6 +139,34 @@ public class TutorController extends AbstractTutorController {
     public String deleteTest(@RequestParam Long idTest) {
         tutorService.deleteTest(idTest);
         return "redirect:/tutor/home/testslist.html";
+    }
+
+    @RequestMapping(value = "/delete_question", method = RequestMethod.POST)
+    public String deleteQuestion(@RequestParam Long idQuestion, @RequestParam Long idTest) {
+        tutorService.deleteQuestion(idQuestion);
+        return "redirect:/tutor/home/questions.html?idTest=" + idTest;
+    }
+
+    @RequestMapping(value = "/delete_answer", method = RequestMethod.POST)
+    public String deleteAnswer(@RequestParam Long idAnswer, @RequestParam Long idTest) {
+        tutorService.deleteAnswer(idAnswer);
+        return "redirect:/tutor/home/questions.html?idTest=" + idTest;
+    }
+
+    private Question initQuestion(Long idTest) {
+        Question question = new Question();
+        Test test = new Test();
+        test.setIdTest(idTest);
+        question.setTest(test);
+        return question;
+    }
+
+    private Answer initAnswer(Long idQuestion, Long idTest) {
+        Answer answer = new Answer();
+        Question question = initQuestion(idTest);
+        question.setIdQuestion(idQuestion);
+        answer.setQuestion(question);
+        return answer;
     }
 
 }

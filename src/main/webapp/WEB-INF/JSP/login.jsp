@@ -25,17 +25,6 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </tr>
             <tr>
-                <td><label for="idRole">Role</label></td>
-                <td>
-                    <select name="idRole">
-                        <option value="0">--- Select ---</option>
-                        <c:forEach var="role" items="${roles}">
-                            <option value="${role.idRole}">${role.name}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2" style="text-align:center;padding-top:20px;">
                     <input type="checkbox" value="true" name="_spring_security_remember_me">Remember me
                 </td>
