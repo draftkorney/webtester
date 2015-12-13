@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
+import ua.alex.source.webtester.forms.AccountForm;
 import ua.alex.source.webtester.service.AccountService;
+import ua.alex.source.webtester.utils.CommonUtils;
 import ua.alex.source.webtester.utils.ReflectionUtils;
 
 import java.util.List;
@@ -32,13 +34,18 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(readOnly = true)
     public List<Account> getAll(int row, int count) {
-        return accountDao.getAccounts(0, 10);
+        return accountDao.findAll(0, 10);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Account getByLogin(String login) {
         return accountDao.getByLogin(login);
+    }
+
+    @Override
+    public Account getByUniqueField(String uniqueValue, String uniqueField) {
+        return accountDao.getByUniqueField(uniqueValue, uniqueField);
     }
 
     @Override
@@ -58,5 +65,21 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public int countUsers() {
         return accountDao.countUsers();
+    }
+
+    @Override
+    public Account getById(Long idAccount) {
+        return accountDao.getById(idAccount);
+    }
+
+    @Override
+    public AccountForm convertToAccountForm(Long idAccount) {
+        Account account = accountDao.getById(idAccount);
+
+        AccountForm accountForm = new AccountForm();
+        ReflectionUtils.copyByFields(accountForm, account);
+        accountForm.setRoles(CommonUtils.convertRoles(account.getAccountRoles()));
+
+        return accountForm;
     }
 }

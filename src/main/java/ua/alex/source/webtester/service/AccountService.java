@@ -2,6 +2,7 @@ package ua.alex.source.webtester.service;
 
 
 import ua.alex.source.webtester.entities.Account;
+import ua.alex.source.webtester.forms.AccountForm;
 
 import java.util.List;
 
@@ -19,4 +20,9 @@ public interface AccountService {
 
     boolean isExistField(String value, String field) throws NoSuchFieldException;
 
+    Account getById(Long idAccount);
+
+    AccountForm convertToAccountForm(Long idAccount);
+
+    Account getByUniqueField(String uniqueValue, String uniqueField);
 }
