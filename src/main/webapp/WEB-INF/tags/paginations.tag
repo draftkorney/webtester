@@ -11,7 +11,7 @@
     </td>
   </c:if>
 
-  <c:if test="${paginationData.page>2}">
+  <c:if test="${paginationData.page>=2}">
     <td>
       <a href="${url}?page=${paginationData.page-1}">Prev</a>
     </td>
@@ -31,12 +31,12 @@
     </c:choose>
   </c:forEach>
 
-  <c:if test="${paginationData.page < paginationData.countPage && paginationData.page > 1}">
+  <c:if test="${paginationData.page < paginationData.countPage && paginationData.page >= 1}">
     <td>
       <a href="${url}?page=${paginationData.page+1}">Next</a>
     </td>
   </c:if>
-  <c:if test="${paginationData.countPage>0 && paginationData.page > 1}">
+  <c:if test="${paginationData.countPage>0 && paginationData.page >= 1}">
 
     <td>
       <a href="${url}?page=${paginationData.countPage}">Last</a>

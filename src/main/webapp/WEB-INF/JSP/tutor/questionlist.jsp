@@ -11,6 +11,7 @@
 <%--@elvariable id="answer" type="ua.alex.source.webtester.entities.Answer"--%>
 
 <div class="container">
+    <a class="btn btn-info" href="${tutor}/home/testslist.html?page=${testPagination.page}">Back to test list</a>
     <div class="question-content">
         <div><a href="<c:url value="${tutor}/addQuestion.html?idTest=${idTest}"/>">Add a new question</a></div>
 

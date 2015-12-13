@@ -1,5 +1,6 @@
 package ua.alex.source.webtester.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,12 @@ import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.entities.AccountRole;
 import ua.alex.source.webtester.entities.Role;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
-import ua.alex.source.webtester.forms.NewAccount;
+import ua.alex.source.webtester.forms.AccountForm;
 import ua.alex.source.webtester.service.AdminService;
 import ua.alex.source.webtester.service.EmailService;
 import ua.alex.source.webtester.utils.ReflectionUtils;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,19 +43,36 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional(readOnly = false, rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
-    public void addNewAccount(NewAccount newAccount) {
-        Account account = entityBuilder.buildAccount();
-        ReflectionUtils.copyByFields(account, newAccount);
-        account.setPassword(UUID.randomUUID().toString().substring(0, 7));
+    public void addNewAccount(AccountForm accountForm) {
+
+        Long idAccount = accountForm.getIdAccount();
+        Account account;
+        boolean isEmailChange = false;
+
+        if (idAccount == null) {
+            account = entityBuilder.buildAccount();
+            account.setPassword(UUID.randomUUID().toString().substring(0, 7));
+
+        } else {
+            account = accountDao.getById(idAccount);
+            account.setUpdated(new Timestamp(System.currentTimeMillis()));
+            isEmailChange = StringUtils.equalsIgnoreCase(accountForm.getEmail(), account.getEmail());
+        }
+
+        ReflectionUtils.copyByFields(account, accountForm);
         accountDao.save(account);
 
-        List<Role> roles = roleDao.getListByIds(newAccount.getRoles());
+        List<Role> roles = roleDao.getListByIds(accountForm.getRoles());
+
         for (Role role : roles) {
             AccountRole ar = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(ar);
         }
 
-        emailService.confirmNewUser(account);
+        if (isEmailChange || idAccount == null) {
+            emailService.confirmNewUser(account);
+        }
+
     }
 
     @Override

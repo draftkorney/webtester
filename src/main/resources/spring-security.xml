@@ -13,9 +13,8 @@
     <context:component-scan base-package="ua.alex.source.webtester.security"/>
 
     <security:http use-expressions="true" auto-config="true">
-        <security:intercept-url pattern="/login" access="permitAll"/>
+        <security:intercept-url pattern="/login" access="permitAll" />
         <security:intercept-url pattern="/registration" access="permitAll"/>
-        <security:intercept-url pattern="/create_new_account" access="permitAll"/>
         <security:intercept-url pattern="/confirmationEmail" access="permitAll"/>
         <security:intercept-url pattern="/loginFailed" access="permitAll"/>
         <security:intercept-url pattern="/error" access="permitAll"/>
@@ -24,7 +23,7 @@
         <security:intercept-url pattern="/index.jsp" access="permitAll"/>
         <security:intercept-url pattern="/myInfo" access="hasAnyAuthority('ADMIN','TUTOR','ADVANCED_TUTOR','STUDENT')"/>
         <security:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
-        <security:intercept-url pattern="/tutor/**" access="hasAuthority('TUTOR')"/>
+        <security:intercept-url pattern="/tutor/**" access="hasAnyAuthority('TUTOR','ADVANCED_TUTOR')"/>
         <security:intercept-url pattern="/advanced_tutor/**" access="hasAuthority('ADVANCED_TUTOR')"/>
         <security:intercept-url pattern="/**" access="hasAuthority('STUDENT')"/>
         <security:form-login

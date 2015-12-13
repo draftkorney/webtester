@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ua.alex.source.webtester.ApplicationConstants;
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.entities.Answer;
 import ua.alex.source.webtester.entities.Question;
@@ -22,7 +23,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/tutor")
+@RequestMapping(value = {"/tutor", "/advanced_tutor"})
 public class TutorController extends AbstractTutorController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -32,10 +33,19 @@ public class TutorController extends AbstractTutorController {
 
     @RequestMapping(value = "/home/testslist.html", method = RequestMethod.GET)
     public String testslistPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer count, Model model) {
-        int totalCount = tutorService.countTestsByTutorId(SecurityUtils.getCurrentIdAccount());
-        PaginationData paginationData = new PaginationData(totalCount, count, page);
+        PaginationData paginationData;
+        List<Test> testList;
 
-        List<Test> testList = tutorService.getOwnerTests(paginationData.getPage(), count, SecurityUtils.getCurrentIdAccount());
+        if (isAdvancedTutor()) {
+            testList = advancedTutorService.getAll(page, count);
+            paginationData = new PaginationData(testList.size(), count, page);
+        } else {
+            int totalCount = tutorService.countTestsByTutorId(SecurityUtils.getCurrentIdAccount());
+            paginationData = new PaginationData(totalCount, count, page);
+
+            testList = tutorService.getOwnerTests(paginationData.getPage(), count, SecurityUtils.getCurrentIdAccount());
+        }
+
         model.addAttribute("testPaginationData", paginationData);
         model.addAttribute("tests", testList);
 
@@ -54,7 +64,6 @@ public class TutorController extends AbstractTutorController {
 
         return "tutor/questionlist";
     }
-
 
     @RequestMapping(value = {"/editTest.html", "/createTest.html"}, method = RequestMethod.GET)
     public String editTestPage(@RequestParam(required = false) Long idTest, Model model) {
@@ -167,6 +176,10 @@ public class TutorController extends AbstractTutorController {
         question.setIdQuestion(idQuestion);
         answer.setQuestion(question);
         return answer;
+    }
+
+    private boolean isAdvancedTutor() {
+        return SecurityUtils.getCurrentAccount().getRoles().contains(ApplicationConstants.ADVANCED_TUTOR_ROLE);
     }
 
 }

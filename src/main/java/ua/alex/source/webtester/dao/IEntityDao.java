@@ -14,4 +14,6 @@ public interface IEntityDao<T> {
     T getById(Serializable id);
 
     List<T> findAll();
+
+    List<T> findAll(int row, int count);
 }

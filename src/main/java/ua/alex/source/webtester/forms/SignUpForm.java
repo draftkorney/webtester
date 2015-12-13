@@ -17,7 +17,7 @@ public class SignUpForm extends AbstractLoginForm implements IForm {
     @NotEmpty
     @Size(min = 6, max = 60)
     @Email
-    @Unique(fieldName = "email")
+    @Unique()
     private String email;
 
     @NotEmpty
@@ -33,7 +33,7 @@ public class SignUpForm extends AbstractLoginForm implements IForm {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getFio() {

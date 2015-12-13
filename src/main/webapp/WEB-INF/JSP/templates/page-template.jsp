@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 "> <![endif]-->
@@ -24,7 +25,19 @@
 
 <body class="style1">
 <header>
+    <sec:authorize access="isAuthenticated()">
+        <c:url var="logoutUrl" value="/logout"/>
+        <sec:authentication property="principal.username" />
 
+        <form action="${logoutUrl}"
+              method="post">
+            <input type="submit"
+                   value="Log out" />
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+        </form>
+    </sec:authorize>
 </header>
 <section class="main">
     <decorator:body/>

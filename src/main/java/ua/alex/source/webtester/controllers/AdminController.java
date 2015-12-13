@@ -2,20 +2,22 @@ package ua.alex.source.webtester.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import ua.alex.source.webtester.entities.Account;
-import ua.alex.source.webtester.forms.NewAccount;
+import ua.alex.source.webtester.forms.AccountForm;
 import ua.alex.source.webtester.service.AccountService;
 import ua.alex.source.webtester.service.AdminService;
 import ua.alex.source.webtester.utils.PaginationData;
 
 import javax.validation.Valid;
+import javax.validation.executable.ValidateOnExecution;
 import java.util.List;
 
 
@@ -46,20 +48,28 @@ public class AdminController extends AbstractController {
         return "admin/accountList";
     }
 
-    @RequestMapping(value = "/addNewAccount.html", method = RequestMethod.GET)
-    public String addNewUserPage(Model model) {
-        model.addAttribute("newAccount", new NewAccount());
-        return "admin/addNewAccount";
-    }
+    @RequestMapping(value = {"/addNewAccount.html", "/editAccount.html"}, method = RequestMethod.GET)
+    public String addNewUserPage(@RequestParam(required = false) Long idAccount, Model model) {
+        AccountForm account;
 
-    @RequestMapping(value = "/add_new_account", method = RequestMethod.POST)
-    public String addNewUser(@Valid @ModelAttribute NewAccount newAccount, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "admin/addNewAccount";
+        if (idAccount == null) {
+            account = new AccountForm();
+        } else {
+            account = accountService.convertToAccountForm(idAccount);
         }
 
-        adminService.addNewAccount(newAccount);
+        model.addAttribute("accountForm", account);
+        return "admin/addnewaccount";
+    }
+
+    @RequestMapping(value = "/action_with_account", method = RequestMethod.POST)
+    public String addNewUser(@ModelAttribute @Valid AccountForm accountForm, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "admin/addnewaccount";
+        }
+
+        adminService.addNewAccount(accountForm);
         return "redirect:/admin/home/accountsList.html";
     }
 
