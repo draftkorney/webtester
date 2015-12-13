@@ -8,32 +8,34 @@
 <div class="container">
   <h2>Add a New User </h2>
 
-  <form:form method="POST" action="${context}/admin/add_new_account"  commandName="newAccount">
+  <form:form method="POST" action="${context}${admin}/action_with_account"  commandName="accountForm">
     <div class="form-group">
-      <form:errors  class="form-control input-lg"  path="*" />
+      <form:errors  class="form-control input"  path="*" />
     </div>
 
     <div class="form-group">
-      <form:input type="text" class="form-control input-lg"  name="login" placeholder="Login" path="login"/>
+      <form:input type="text" cssClass="form-control input-sm" name="login" placeholder="Login" path="login"/>
     </div>
 
     <div class="form-group">
-      <form:input type="text" class="form-control input-lg"  name="email" placeholder="Email" path="email" />
+      <form:input type="text" cssClass="form-control input-sm"  name="email" placeholder="Email" path="email" />
     </div>
 
     <div class="form-group">
-      <form:input type="text" class="form-control input-lg"  name="fio" placeholder="FIO" path="fio"/>
+      <form:input type="text" cssClass="form-control input-sm"  name="fio" placeholder="FIO" path="fio"/>
+      <form:input type="hidden"   path="idAccount"/>
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </div>
     <div class="form-group">
-      <form:checkbox path="roles" value="0"/>Admin
-      <form:checkbox path="roles" value="1"/>Advance Tutor
-      <form:checkbox path="roles" value="2"/>Tutor
-      <form:checkbox path="roles" value="3"/>Student
+      <form:checkbox path="roles" value="1"/>Admin
+      <form:checkbox path="roles" value="2"/>Advance Tutor
+      <form:checkbox path="roles" value="3"/>Tutor
+      <form:checkbox path="roles" value="4"/>Student
     </div>
 
     <div class="form-group">
-      <button class="btn btn-primary btn-lg btn-block" type="submit">Create</button>
+      <button class="btn btn-primary btn-block" type="submit">Save</button>
+      <a href="<c:url value="${admin}/home/accountsList.html?page=${testPagination.page}"/>">Cancel</a>
     </div>
   </form:form>
 </div>
