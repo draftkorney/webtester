@@ -32,6 +32,11 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
     }
 
     @Override
+    public Account getByUniqueField(String uniqueValue, String uniqueField) {
+        return (Account) getSession().createCriteria(getEntityClass()).add(Restrictions.eq(uniqueField, uniqueValue)).uniqueResult();
+    }
+
+    @Override
     public int countUsers() {
         return getSession().createCriteria(getEntityClass()).list().size();
     }

@@ -1,31 +1,36 @@
 package ua.alex.source.webtester.forms;
 
+
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
+import net.sf.oval.constraint.Size;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import ua.alex.source.webtester.validations.Unique;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
-public class NewAccount implements IForm {
+public class AccountForm implements IForm {
+
+    Long idAccount;
 
     @NotEmpty
-    @Size(min = 6, max = 60)
-    @Unique(fieldName = "login")
+    @Length(min = 5, max = 60, errorCode = "form.login.invalid.size")
+    @Unique()
     private String login;
 
     @NotEmpty
-    @Size(min = 6, max = 60)
-    @Unique(fieldName = "email")
+    @Length(min = 5, max = 60)
+    @Unique()
     @Email
     private String email;
 
     @NotEmpty
-    @Size(min = 6, max = 200)
+    @Length(min = 5, max = 200)
     private String fio;
 
     @NotNull
+    @Size(min = 1, max = 4)
     private List<Integer> roles;
 
     public String getLogin() {
@@ -41,7 +46,7 @@ public class NewAccount implements IForm {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getFio() {
@@ -58,5 +63,13 @@ public class NewAccount implements IForm {
 
     public void setRoles(List<Integer> roles) {
         this.roles = roles;
+    }
+
+    public Long getIdAccount() {
+        return idAccount;
+    }
+
+    public void setIdAccount(Long idAccount) {
+        this.idAccount = idAccount;
     }
 }

@@ -40,6 +40,12 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
     }
 
     @Override
+    public List<T> findAll(int row, int count) {
+        int first = (row - 1) * count;
+        return getSession().createCriteria(getEntityClass()).setMaxResults(count).setFirstResult(first).list();
+    }
+
+    @Override
     public void deleteById(Serializable id) {
         String q = "DELETE  FROM " + getEntityClass().getSimpleName() + " clazz WHERE clazz.id = :id ";
         getSession().createQuery(q).setParameter("id", id).executeUpdate();

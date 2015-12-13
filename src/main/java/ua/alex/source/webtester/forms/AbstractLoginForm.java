@@ -11,7 +11,7 @@ public class AbstractLoginForm implements IForm {
 
     @NotEmpty(message = "{form.login.null}")
     @Size(min = 1, max = 60, message = "form.login.invalid.size")
-    @Unique(fieldName = "login")
+    @Unique()
     private String login;
 
     @NotEmpty(message = "form.password.null")
