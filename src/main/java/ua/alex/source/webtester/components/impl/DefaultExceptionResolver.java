@@ -9,7 +9,6 @@ import ua.alex.source.webtester.exceptions.InvalidUserInputException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Component
 public class DefaultExceptionResolver extends AbstractHandlerExceptionResolver {
     private static final Logger LOGGER = Logger.getLogger(DefaultExceptionResolver.class);
 

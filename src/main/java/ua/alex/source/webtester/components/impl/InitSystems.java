@@ -1,5 +1,7 @@
 package ua.alex.source.webtester.components.impl;
 
+import net.sf.oval.Validator;
+import net.sf.oval.localization.message.ResourceBundleMessageResolver;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import ua.alex.source.webtester.utils.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 @Component
@@ -31,6 +34,8 @@ public class InitSystems implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         createAdmin();
+        ResourceBundleMessageResolver resolver = (ResourceBundleMessageResolver) Validator.getMessageResolver();
+        resolver.addMessageBundle(ResourceBundle.getBundle("messages/messages"));
     }
 
     private void createAdmin() {

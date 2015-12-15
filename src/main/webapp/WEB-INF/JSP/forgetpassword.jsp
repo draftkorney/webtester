@@ -8,7 +8,7 @@
 <div class="container">
     <h2>Please enter your email</h2>
 
-    <form method="POST" action="${context}/forgot_password">
+    <form:form method="POST" action="${context}/forgot_password" commandName="form">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         <div class="form-group">
@@ -21,5 +21,5 @@
         <div class="form-group">
             <input type="submit" value="Send"/>
         </div>
-    </form>
+    </form:form>
 </div>

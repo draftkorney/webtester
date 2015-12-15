@@ -22,6 +22,8 @@
     <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css?v=${CSS_JS_VERSION}"/>
     <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css.map?v=${CSS_JS_VERSION}"/>
 </head>
+<script src="${context}/resources/js/jquery-1.10.2.js?v=${CSS_JS_VERSION}"></script>
+<script src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
 
 <body class="style1">
 <header>
@@ -42,8 +44,7 @@
 <section class="main">
     <decorator:body/>
 </section>
-<script src="${context}/resources/js/jquery-1.10.2.js?v=${CSS_JS_VERSION}"></script>
-<script src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
+
 <script>
     $(document).ready(function () {
 

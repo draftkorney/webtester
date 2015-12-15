@@ -15,7 +15,7 @@ public class AccountRoleDaoImpl extends AbstractEntityDao<AccountRole> implement
 
 	@Override
 	public void deleteRolesByAccountId(Long idAccount) {
-		String q = "DELETE FROM AccountRole ar WHERE ar.idAccount = :idAccount ";
+		String q = "DELETE FROM AccountRole ar WHERE ar.account.idAccount = :idAccount ";
 		getSession().createQuery(q).setParameter("idAccount", idAccount).executeUpdate();
 	}
 }

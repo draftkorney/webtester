@@ -11,11 +11,12 @@ import java.util.regex.Pattern;
 
 public class EmailConstraintValidator extends AbstractAnnotationCheck<Email> {
 
-    private static final String EMAIL_PATTERN = "^[\\\\w!#$%&'*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
+    private static final String EMAIL_PATTERN = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
     @Override
     public boolean isSatisfied(Object validatedObject, Object valueToValidate, OValContext oValContext, Validator validator) throws OValException {
+        if (valueToValidate == null) return true;
         Matcher matcher = pattern.matcher((String) valueToValidate);
         return matcher.matches();
     }

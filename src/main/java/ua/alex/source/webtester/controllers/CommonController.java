@@ -79,17 +79,17 @@ public class CommonController extends AbstractController implements Initializing
 
     @RequestMapping(value = {"/forgot_password.html"}, method = RequestMethod.GET)
     public String forgotPasswordPage(Model model) {
-        model.addAttribute("email", new ForgotPasswordForm());
+        model.addAttribute("form", new ForgotPasswordForm());
         return "forgetpassword";
     }
 
-    @RequestMapping(value = {"/forgot_password"}, method = RequestMethod.GET)
-    public String forgotPassword(@Valid @ModelAttribute ForgotPasswordForm email, BindingResult result, Model model) {
+    @RequestMapping(value = {"/forgot_password"}, method = RequestMethod.POST)
+    public String forgotPassword(@Valid @ModelAttribute("form") ForgotPasswordForm form, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "forgetpassword";
         }
 
-        commonService.sendForgotPassword(email);
+        commonService.sendForgotPassword(form);
         return "forgetpassword";
     }
 

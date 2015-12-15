@@ -8,9 +8,9 @@ import ua.alex.source.webtester.validations.MustExist;
 
 public class ForgotPasswordForm implements IForm {
 
-    @NotNull(errorCode = "form.email.null")
-    @NotBlank(errorCode = "form.email.null")
-    @Email(errorCode = "form.email.wrong")
+    @NotNull(message = "form.email.null")
+    @NotBlank(message = "form.email.null")
+    @Email(message = "form.email.wrong")
     @MustExist(errorCode = "form.forgot.email.exist")
     private String email;
 

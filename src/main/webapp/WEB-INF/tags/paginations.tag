@@ -36,7 +36,7 @@
       <a href="${url}?page=${paginationData.page+1}">Next</a>
     </td>
   </c:if>
-  <c:if test="${paginationData.countPage>0 && paginationData.page >= 1}">
+  <c:if test="${paginationData.countPage>1}">
 
     <td>
       <a href="${url}?page=${paginationData.countPage}">Last</a>

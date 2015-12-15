@@ -17,9 +17,8 @@ public class CurrentAccount extends User {
     public CurrentAccount(Account a) {
         super(a.getEmail(), a.getPassword(), a.getActive(), true, true, true,
                 AuthentificationService.convert(a.getAccountRoles()));
-        CommonUtils.convertRoles(a.getAccountRoles());
         this.idAccount = a.getIdAccount();
-
+        this.roles = CommonUtils.convertRoles(a.getAccountRoles());
     }
 
     public long getIdAccount() {

@@ -38,7 +38,7 @@
                               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                               <input type="hidden" value="${user.idAccount}" name="idAccount">
                               <c:choose>
-                                  <c:when test="user.active">
+                                  <c:when test="${user.active}">
                                       <button class="btn btn-danger" type="submit">Deactivate user</button>
                                   </c:when>
                                   <c:otherwise>

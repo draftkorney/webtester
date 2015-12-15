@@ -59,8 +59,8 @@ public class AdminServiceImpl implements AdminService {
             account = accountDao.getById(idAccount);
             account.setUpdated(new Timestamp(System.currentTimeMillis()));
             accountRoleDao.deleteRolesByAccountId(account.getIdAccount());
-            isEmailChange = StringUtils.equalsIgnoreCase(accountForm.getEmail(), account.getEmail());
-            isLoginChange = StringUtils.equals(accountForm.getLogin(), account.getLogin());
+            isEmailChange = !StringUtils.equalsIgnoreCase(accountForm.getEmail(), account.getEmail());
+            isLoginChange = !StringUtils.equals(accountForm.getLogin(), account.getLogin());
         }
 
         ReflectionUtils.copyByFields(account, accountForm);

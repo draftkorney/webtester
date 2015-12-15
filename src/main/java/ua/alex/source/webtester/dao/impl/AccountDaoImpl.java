@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.entities.Account;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -43,11 +44,13 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
 
     @Override
     public void changeUserActivity(Long idAccount) {
-        getSession().createQuery("UPDATE Accout a SET a.active = " +
+        getSession().createQuery("UPDATE Account a SET a.active = " +
                 "CASE a.active " +
                 "WHEN TRUE THEN FALSE " +
-                "ELSE TRUE END " +
-                "WHERE a.idAccount = :idAccount").setParameter("idAccount", idAccount).executeUpdate();
+                "ELSE TRUE END, a.updated = :updated  " +
+                "WHERE a.idAccount = :idAccount")
+                .setParameter("idAccount", idAccount)
+                .setParameter("updated", new Timestamp(System.currentTimeMillis())).executeUpdate();
     }
 
     @Override

@@ -9,29 +9,29 @@ import java.util.List;
 
 public class AccountForm implements IForm {
 
-    @NotNull(errorCode = "form.login.null")
-    @NotBlank(errorCode = "form.login.null")
-    @Length(min = 5, max = 60, errorCode = "form.login.invalid.size")
-    @Unique(errorCode = "form.login.is.exist")
+    Long idAccount;
+
+    @NotNull(message = "form.login.null")
+    @NotBlank(message = "form.login.null")
+    @Length(min = 5, max = 60, message = "form.login.invalid.size")
+    @Unique(message = "form.login.is.exist")
     private String login;
 
-    @NotNull(errorCode = "form.email.null")
-    @NotBlank(errorCode = "form.email.null")
-    @Length(min = 5, max = 60, errorCode = "form.email.invalid.size")
-    @Unique(errorCode = "form.email.is.exist")
-    @Email(errorCode = "form.email.wrong")
+    @NotNull(message = "form.email.null")
+    @NotBlank(message = "form.email.null")
+    @Length(min = 5, max = 60, message = "form.email.invalid.size")
+    @Unique(message = "form.email.is.exist")
+    @Email(message = "form.email.wrong")
     private String email;
 
-    @NotNull(errorCode = "form.fio.null")
-    @NotBlank(errorCode = "form.fio.null")
-    @Length(min = 5, max = 200, errorCode = "form.fio.invalid.size")
+    @NotNull(message = "form.fio.null")
+    @NotBlank(message = "form.fio.null")
+    @Length(min = 5, max = 200, message = "form.fio.invalid.size")
     private String fio;
 
-    @NotNull(errorCode = "form.roles.null")
-    @Size(min = 1, max = 4, errorCode = "form.roles.invalid.size")
+    @NotNull(message = "form.roles.null")
+    @Size(min = 1, max = 4, message = "form.roles.invalid.size")
     private List<Integer> roles;
-
-    Long idAccount;
 
     public String getLogin() {
         return login;

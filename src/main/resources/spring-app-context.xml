@@ -38,7 +38,8 @@
 
     <bean id="validator" class="net.sf.oval.integration.spring.SpringValidator">
         <property name="validator">
-            <bean class="net.sf.oval.Validator"/>
+            <bean class="net.sf.oval.Validator">
+            </bean>
         </property>
     </bean>
 
