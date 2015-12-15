@@ -1,0 +1,16 @@
+<div>#springMessage("email.hi") $firstName!</div>
+
+
+<div>
+    #if($isNewLogin)
+        #springMessage("email.admin.change.login.body")
+        <strong>$login</strong>
+    #end
+</div>
+<div>
+    #if($isNewEmail)
+        #springMessage("email.admin.change.email.body")
+        <strong>$email</strong>
+    #end
+</div>
+

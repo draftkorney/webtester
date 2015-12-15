@@ -1,27 +1,29 @@
 package ua.alex.source.webtester.forms;
 
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import net.sf.oval.constraint.EqualToField;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
+import ua.alex.source.webtester.validations.Email;
 import ua.alex.source.webtester.validations.Unique;
-
-import javax.validation.constraints.Size;
 
 public class SignUpForm extends AbstractLoginForm implements IForm {
     private static final long serialVersionUID = -3633827335080843887L;
 
-    @NotEmpty
-    @Size(min = 6, max = 60)
+    @EqualToField(value = "password",errorCode = "form.signup.confirm.pass.not.equal")
     private String confirmPass;
 
-    @NotEmpty
-    @Size(min = 6, max = 60)
-    @Email
-    @Unique()
+    @NotNull(errorCode = "form.email.null")
+    @NotEmpty(errorCode = "form.email.null")
+    @Length(min = 5, max = 60, errorCode = "form.email.invalid.size")
+    @Unique(errorCode = "form.email.is.exist")
+    @Email(errorCode = "form.email.wrong")
     private String email;
 
-    @NotEmpty
-    @Size(min = 6, max = 200)
+    @NotNull(errorCode = "form.fio.null")
+    @NotEmpty(errorCode = "form.fio.null")
+    @Length(min = 5, max = 200, errorCode = "form.fio.invalid.size")
     private String fio;
 
     public static long getSerialVersionUID() {

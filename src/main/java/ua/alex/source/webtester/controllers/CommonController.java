@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.alex.source.webtester.ApplicationConstants;
 import ua.alex.source.webtester.entities.Role;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
+import ua.alex.source.webtester.forms.ForgotPasswordForm;
 import ua.alex.source.webtester.forms.SignUpForm;
 import ua.alex.source.webtester.security.CurrentAccount;
 import ua.alex.source.webtester.security.SecurityUtils;
@@ -74,6 +75,22 @@ public class CommonController extends AbstractController implements Initializing
     public String myInfo(Model model) {
         CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
         return "redirect:" + getHomeUrl(currentAccount.getRoles());
+    }
+
+    @RequestMapping(value = {"/forgot_password.html"}, method = RequestMethod.GET)
+    public String forgotPasswordPage(Model model) {
+        model.addAttribute("email", new ForgotPasswordForm());
+        return "forgetpassword";
+    }
+
+    @RequestMapping(value = {"/forgot_password"}, method = RequestMethod.GET)
+    public String forgotPassword(@Valid @ModelAttribute ForgotPasswordForm email, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "forgetpassword";
+        }
+
+        commonService.sendForgotPassword(email);
+        return "forgetpassword";
     }
 
     private String getHomeUrl(List<Integer> roles) {

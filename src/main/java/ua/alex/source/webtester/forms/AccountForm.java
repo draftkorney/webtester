@@ -1,37 +1,37 @@
 package ua.alex.source.webtester.forms;
 
 
-import net.sf.oval.constraint.Length;
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
-import net.sf.oval.constraint.Size;
-import org.hibernate.validator.constraints.Email;
+import net.sf.oval.constraint.*;
+import ua.alex.source.webtester.validations.Email;
 import ua.alex.source.webtester.validations.Unique;
 
 import java.util.List;
 
 public class AccountForm implements IForm {
 
-    Long idAccount;
-
-    @NotEmpty
+    @NotNull(errorCode = "form.login.null")
+    @NotBlank(errorCode = "form.login.null")
     @Length(min = 5, max = 60, errorCode = "form.login.invalid.size")
-    @Unique()
+    @Unique(errorCode = "form.login.is.exist")
     private String login;
 
-    @NotEmpty
-    @Length(min = 5, max = 60)
-    @Unique()
-    @Email
+    @NotNull(errorCode = "form.email.null")
+    @NotBlank(errorCode = "form.email.null")
+    @Length(min = 5, max = 60, errorCode = "form.email.invalid.size")
+    @Unique(errorCode = "form.email.is.exist")
+    @Email(errorCode = "form.email.wrong")
     private String email;
 
-    @NotEmpty
-    @Length(min = 5, max = 200)
+    @NotNull(errorCode = "form.fio.null")
+    @NotBlank(errorCode = "form.fio.null")
+    @Length(min = 5, max = 200, errorCode = "form.fio.invalid.size")
     private String fio;
 
-    @NotNull
-    @Size(min = 1, max = 4)
+    @NotNull(errorCode = "form.roles.null")
+    @Size(min = 1, max = 4, errorCode = "form.roles.invalid.size")
     private List<Integer> roles;
+
+    Long idAccount;
 
     public String getLogin() {
         return login;

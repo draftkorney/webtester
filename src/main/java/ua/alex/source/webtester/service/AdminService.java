@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface AdminService {
 
-    void addNewAccount(AccountForm accountForm);
+    void saveOrUpdateAccount(AccountForm accountForm);
 
     void createAdmin();
 
     List<Account> getUsers(int row,int count);
+
+    void changeUserActivity(Long idAccount);
 }

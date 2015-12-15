@@ -1,32 +1,31 @@
 package ua.alex.source.webtester.forms;
 
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Range;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.NotBlank;
+import net.sf.oval.constraint.NotNull;
 import ua.alex.source.webtester.entities.Account;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class TestForm implements IForm {
     private static final long serialVersionUID = -3633827335080843887L;
 
-    private Long idTest;
-
-    @NotEmpty
-    @Size(min = 6, max = 60)
+    @NotNull(errorCode = "form.test.name.empty")
+    @NotBlank(errorCode = "form.test.name.empty")
+    @Length(min = 6, max = 60, errorCode = "form.test.name.length")
     private String name;
 
-    @NotEmpty
-    @Size(min = 6, max = 60)
+    @NotNull(errorCode = "form.test.name.empty")
+    @NotBlank(errorCode = "from.test.description")
+    @Length(min = 6, max = 60, errorCode = "form.test.description.length")
     private String description;
 
-    @NotNull
-    @Range(min = 30)
     private Integer timePerQuestion;
 
     @NotNull
     private Account account;
+
+    private Long idTest;
 
     public Long getIdTest() {
         return idTest;

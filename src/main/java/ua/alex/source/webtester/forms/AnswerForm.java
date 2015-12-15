@@ -1,18 +1,19 @@
 package ua.alex.source.webtester.forms;
 
 
-import org.hibernate.validator.constraints.NotEmpty;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.NotBlank;
+import net.sf.oval.constraint.NotNull;
 import ua.alex.source.webtester.entities.Question;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class AnswerForm implements IForm {
 
     private Long idAnswer;
 
-    @NotEmpty
-    @Size(min = 2, max = 255)
+    @NotNull(errorCode = "form.answer.name.empty")
+    @NotBlank(errorCode = "form.answer.name.empty")
+    @Length(min = 2, max = 255, errorCode = "form.answer.name.invalid.length")
     private String name;
 
     private boolean correct;

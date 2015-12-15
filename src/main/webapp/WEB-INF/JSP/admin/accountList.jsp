@@ -36,14 +36,13 @@
 
                           <form id="actionForm" action="${admin}/update_user_activity" name="action" method="POST">
                               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                              <input type="hidden" value="${user.active}" name="active">
                               <input type="hidden" value="${user.idAccount}" name="idAccount">
                               <c:choose>
                                   <c:when test="user.active">
-                                      <button class="btn" type="submit">Deactivate user</button>
+                                      <button class="btn btn-danger" type="submit">Deactivate user</button>
                                   </c:when>
                                   <c:otherwise>
-                                      <button class="btn" type="submit">Activate user</button>
+                                      <button class="btn btn-success" type="submit">Activate user</button>
                                   </c:otherwise>
                               </c:choose>
 
@@ -57,6 +56,6 @@
       </div>
   </div>
 
-    <paginations:paginations paginationData="${adminPaginationData}" url="${url}" />
+    <paginations:paginations paginationData="${adminPagination}" url="${url}" />
 
 </div>

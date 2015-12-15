@@ -18,7 +18,7 @@ public class Test extends ManagerEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "time_per_question", columnDefinition = "INTEGER NOT NULL DEFAULT 30")
+    @Column(name = "time_per_question", insertable = false)
     private int timePerQuestion;
 
     @ManyToOne(fetch = FetchType.LAZY)

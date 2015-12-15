@@ -16,4 +16,6 @@ public interface AccountDao extends IEntityDao<Account> {
     boolean isExistValueField(String value, String field);
 
     Account getByUniqueField(String uniqueValue, String uniqueField);
+
+    void changeUserActivity(Long idAccount);
 }

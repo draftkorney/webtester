@@ -7,10 +7,6 @@ import ua.alex.source.webtester.entities.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * @author nedis
- * @version 1.0
- */
 @Component("entityBuilder")
 public class EntityBuilderImpl implements EntityBuilder {
 

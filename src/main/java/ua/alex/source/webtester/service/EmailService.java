@@ -11,4 +11,8 @@ public interface EmailService {
 	void confirmNewUser(Account account);
 
 	void sendGeneratedPasswordToEmail();
+
+	void sendNewEmailOrLogin(Account account, boolean isNewLogin, boolean isNewEmail);
+
+	void sendForgotPassword(Account account);
 }

@@ -84,6 +84,55 @@ public class EmailServiceStub implements EmailService {
     }
 
     @Override
+    public void sendNewEmailOrLogin(Account account, boolean isNewLogin, boolean isNewEmail) {
+        String templateBodyLocation = "template/sendnewlogin.vm";
+
+        String title = messageSource.getMessage("email.admin.change.header", new Object[]{}, getLocale());
+
+        Map<String, Object> param = new HashMap<>();
+
+        param.put("param", new HashMap<String, Object>() {{
+            this.put("firstName", account.getFio());
+            this.put("isNewLogin", isNewLogin);
+            this.put("isNewEmail", isNewEmail);
+            this.put("springMacroRequestContext", new RequestContext(getRequest()));
+        }});
+
+        if (isNewEmail) {
+            param.put("email", account.getEmail());
+        }
+        if (isNewLogin) {
+            param.put("login", account.getLogin());
+        }
+
+        param.put("pathTemplate", templateBodyLocation);
+        param.put("subject", title);
+
+        sendEmail(param, fromEmail, account.getEmail());
+    }
+
+    @Override
+    public void sendForgotPassword(Account account) {
+        String templateBodyLocation = "template/forgotpassword.vm";
+
+        String title = messageSource.getMessage("email.forgot.password.header", new Object[]{}, getLocale());
+
+        Map<String, Object> param = new HashMap<>();
+
+        param.put("param", new HashMap<String, Object>() {{
+            this.put("login", account.getLogin());
+            this.put("firstName", account.getFio());
+            this.put("password", account.getPassword());
+            this.put("springMacroRequestContext", new RequestContext(getRequest()));
+        }});
+
+        param.put("pathTemplate", templateBodyLocation);
+        param.put("subject", title);
+
+        sendEmail(param, fromEmail, account.getEmail());
+    }
+
+    @Override
     public void sendGeneratedPasswordToEmail() {
 
     }

@@ -1,16 +1,14 @@
 package ua.alex.source.webtester.validations;
 
-
+import ua.alex.source.webtester.validations.impl.MustExistConstraintValidator;
 import ua.alex.source.webtester.validations.impl.UniqueConstraintValidator;
 
 import java.lang.annotation.*;
 
 @Documented
-@net.sf.oval.configuration.annotation.Constraint(checkWith = UniqueConstraintValidator.class)
+@net.sf.oval.configuration.annotation.Constraint(checkWith = MustExistConstraintValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Unique {
-    String errorCode() default "must.be.unique";
-    String message() default "must.be.unique";
-
+public @interface MustExist {
+    String errorCode() default "must.exist";
 }

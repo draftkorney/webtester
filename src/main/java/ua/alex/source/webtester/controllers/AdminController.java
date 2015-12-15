@@ -2,13 +2,9 @@ package ua.alex.source.webtester.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.forms.AccountForm;
@@ -17,7 +13,6 @@ import ua.alex.source.webtester.service.AdminService;
 import ua.alex.source.webtester.utils.PaginationData;
 
 import javax.validation.Valid;
-import javax.validation.executable.ValidateOnExecution;
 import java.util.List;
 
 
@@ -29,7 +24,6 @@ public class AdminController extends AbstractController {
     protected AdminService adminService;
     @Autowired
     protected AccountService accountService;
-
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home() {
@@ -69,7 +63,14 @@ public class AdminController extends AbstractController {
             return "admin/addnewaccount";
         }
 
-        adminService.addNewAccount(accountForm);
+        adminService.saveOrUpdateAccount(accountForm);
+        return "redirect:/admin/home/accountsList.html";
+    }
+
+    @RequestMapping(value = "/update_user_activity", method = RequestMethod.POST)
+    public String changeUserActivity(@RequestParam Long idAccount) {
+
+        adminService.changeUserActivity(idAccount);
         return "redirect:/admin/home/accountsList.html";
     }
 

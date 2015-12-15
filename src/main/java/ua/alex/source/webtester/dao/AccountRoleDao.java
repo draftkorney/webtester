@@ -9,4 +9,5 @@ import ua.alex.source.webtester.entities.AccountRole;
  */
 public interface AccountRoleDao extends IEntityDao<AccountRole> {
 
+    void deleteRolesByAccountId(Long idAccount);
 }

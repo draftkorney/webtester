@@ -43,11 +43,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional(readOnly = false, rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
-    public void addNewAccount(AccountForm accountForm) {
+    public void saveOrUpdateAccount(AccountForm accountForm) {
+        boolean isEmailChange = false;
+        boolean isLoginChange = false;
 
         Long idAccount = accountForm.getIdAccount();
         Account account;
-        boolean isEmailChange = false;
+
 
         if (idAccount == null) {
             account = entityBuilder.buildAccount();
@@ -56,7 +58,9 @@ public class AdminServiceImpl implements AdminService {
         } else {
             account = accountDao.getById(idAccount);
             account.setUpdated(new Timestamp(System.currentTimeMillis()));
+            accountRoleDao.deleteRolesByAccountId(account.getIdAccount());
             isEmailChange = StringUtils.equalsIgnoreCase(accountForm.getEmail(), account.getEmail());
+            isLoginChange = StringUtils.equals(accountForm.getLogin(), account.getLogin());
         }
 
         ReflectionUtils.copyByFields(account, accountForm);
@@ -69,8 +73,10 @@ public class AdminServiceImpl implements AdminService {
             accountRoleDao.save(ar);
         }
 
-        if (isEmailChange || idAccount == null) {
+        if (idAccount == null) {
             emailService.confirmNewUser(account);
+        } else if (isEmailChange || isLoginChange) {
+            emailService.sendNewEmailOrLogin(account, isLoginChange, isEmailChange);
         }
 
     }
@@ -90,9 +96,10 @@ public class AdminServiceImpl implements AdminService {
             AccountRole ar = entityBuilder.buildAccountRole(admin, r);
             accountRoleDao.save(ar);
             LOGGER.info("Created admin account");
+        } else {
+            LOGGER.info("admin is already exist");
         }
 
-        LOGGER.info("admin is already exist");
     }
 
     @Override
@@ -101,6 +108,10 @@ public class AdminServiceImpl implements AdminService {
         return accountDao.getAccounts(row, count);
     }
 
-
+    @Override
+    @Transactional(readOnly = false, rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
+    public void changeUserActivity(Long idAccount) {
+        accountDao.changeUserActivity(idAccount);
+    }
 }
 

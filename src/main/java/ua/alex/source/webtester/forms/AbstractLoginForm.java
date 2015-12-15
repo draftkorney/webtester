@@ -1,21 +1,23 @@
 package ua.alex.source.webtester.forms;
 
 
-import org.hibernate.validator.constraints.NotEmpty;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
 import ua.alex.source.webtester.validations.Unique;
-
-import javax.validation.constraints.Size;
 
 public class AbstractLoginForm implements IForm {
     private static final long serialVersionUID = -8342766271396665602L;
 
-    @NotEmpty(message = "{form.login.null}")
-    @Size(min = 1, max = 60, message = "form.login.invalid.size")
-    @Unique()
+    @NotNull(errorCode = "form.login.null")
+    @NotEmpty(errorCode = "form.login.null")
+    @Length(min = 5, max = 60, errorCode = "form.login.invalid.size")
+    @Unique(errorCode = "form.login.is.exist")
     private String login;
 
-    @NotEmpty(message = "form.password.null")
-    @Size(min = 6, max = 60, message = "form.password.invalid.size")
+    @NotNull(errorCode = "form.password.null")
+    @NotEmpty(errorCode = "form.password.null")
+    @Length(min = 6, max = 60, errorCode = "form.password.invalid.size")
     private String password;
 
     public String getLogin() {

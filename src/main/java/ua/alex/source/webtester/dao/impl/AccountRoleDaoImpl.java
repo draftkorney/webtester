@@ -5,7 +5,7 @@ import ua.alex.source.webtester.dao.AccountRoleDao;
 import ua.alex.source.webtester.entities.AccountRole;
 
 
-@Repository("hiberanteAccountRoleDao")
+@Repository
 public class AccountRoleDaoImpl extends AbstractEntityDao<AccountRole> implements AccountRoleDao {
 
 	@Override
@@ -13,4 +13,9 @@ public class AccountRoleDaoImpl extends AbstractEntityDao<AccountRole> implement
 		return AccountRole.class;
 	}
 
+	@Override
+	public void deleteRolesByAccountId(Long idAccount) {
+		String q = "DELETE FROM AccountRole ar WHERE ar.idAccount = :idAccount ";
+		getSession().createQuery(q).setParameter("idAccount", idAccount).executeUpdate();
+	}
 }

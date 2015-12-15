@@ -35,7 +35,7 @@
 
     <div class="form-group">
       <button class="btn btn-primary btn-block" type="submit">Save</button>
-      <a href="<c:url value="${admin}/home/accountsList.html?page=${testPagination.page}"/>">Cancel</a>
+      <a href="<c:url value="${admin}/home/accountsList.html?page=${adminPagination.page}"/>">Cancel</a>
     </div>
   </form:form>
 </div>

@@ -35,6 +35,10 @@
                 </td>
 
                 <td colspan="2" style="text-align:center;padding-top:20px;">
+                    <a href="${context}/forgot_password.html">Forgot password?</a>
+                </td>
+
+                <td colspan="2" style="text-align:center;padding-top:20px;">
                     <a href="${context}/registration">Sign Up</a>
                 </td>
             </tr>

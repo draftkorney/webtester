@@ -1,17 +1,12 @@
 package ua.alex.source.webtester.service.impl;
 
-import java.util.List;
-import java.util.UUID;
-
-
+import com.restfb.types.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.restfb.types.User;
 import ua.alex.source.webtester.components.EntityBuilder;
 import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.dao.AccountRegistrationDao;
@@ -22,10 +17,14 @@ import ua.alex.source.webtester.entities.AccountRegistration;
 import ua.alex.source.webtester.entities.AccountRole;
 import ua.alex.source.webtester.entities.Role;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
+import ua.alex.source.webtester.forms.ForgotPasswordForm;
 import ua.alex.source.webtester.forms.SignUpForm;
 import ua.alex.source.webtester.service.CommonService;
 import ua.alex.source.webtester.service.EmailService;
 import ua.alex.source.webtester.utils.ReflectionUtils;
+
+import java.util.List;
+import java.util.UUID;
 
 
 @Service("commonService")
@@ -137,5 +136,11 @@ public class CommonServiceImpl implements CommonService {
 
             return signUp(form, false, true);
         }
+    }
+
+    @Override
+    public void sendForgotPassword(ForgotPasswordForm email) {
+        Account account = accountDao.getByEmail(email.getEmail());
+        emailService.sendForgotPassword(account);
     }
 }
