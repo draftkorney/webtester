@@ -19,6 +19,8 @@
         <security:intercept-url pattern="/loginFailed" access="permitAll"/>
         <security:intercept-url pattern="/forgot_password.html" access="permitAll"/>
         <security:intercept-url pattern="/forgot_password" access="permitAll"/>
+        <security:intercept-url pattern="/profile.html" access="permitAll"/>
+        <security:intercept-url pattern="/profile" access="permitAll"/>
         <security:intercept-url pattern="/error" access="permitAll"/>
         <security:intercept-url pattern="/resources/**" access="permitAll"/>
         <security:intercept-url pattern="/favicon.ico" access="permitAll"/>

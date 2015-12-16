@@ -6,49 +6,45 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <div class="container">
-    <h2>Please login </h2>
+    <h2 class="text-center">Please login </h2>
 
-    <form method="POST" action="${context}/loginHandler">
-        <table style="width:300px;margin:0 auto;">
-            <tr>
+    <div class="row">
+        <form class="col-md-4 col-md-offset-4" method="POST" action="${context}/loginHandler">
+            <div class="form-group">
                 <c:if test="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION != null }">
-                    <td colspan="2" class="errors">${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message }</td>
+                    <span class="errors">${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message }</span>
                 </c:if>
-            </tr>
-            <tr>
-                <td><label for="username">Login</label></td>
-                <td><input type="text" name="username"/></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password</label></td>
-                <td><input type="password" name="password"/></td>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control input" placeholder="Email" name="username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control input" placeholder="Password" name="password">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center;padding-top:20px;">
-                    <input type="checkbox" value="true" name="_spring_security_remember_me">Remember me
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center;padding-top:20px;">
-                    <input type="submit" value="Login"/>
-                </td>
+            </div>
 
-                <td colspan="2" style="text-align:center;padding-top:20px;">
-                    <a href="${context}/forgot_password.html">Forgot password?</a>
-                </td>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="true" name="_spring_security_remember_me"> Remember me
+                    </label>
+                </div>
+            </div>
 
-                <td colspan="2" style="text-align:center;padding-top:20px;">
-                    <a href="${context}/registration">Sign Up</a>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center;padding-top:20px;">
-                    <a href="${context}/fbLogin">
-                        <img alt="fbLogin" src="${context}/resources/images/login-facebook.png"/>
-                    </a>
-                </td>
-            </tr>
-        </table>
-    </form>
+            <div class="form-group">
+                <a href="${context}/fbLogin">
+                    <img alt="fbLogin" src="${context}/resources/images/login-facebook.png"/>
+                </a>
+                <button class="btn btn-primary btn-default" type="submit">Log In</button>
+                <span class="pull-right"><a href="${context}/registration" class="btn btn-success btn-default">Sign Up</a></span>
+            </div>
+            <div class="">
+                <span class="pull-right"><a href="${context}/forgot_password.html">Forgot password?</a></span>
+            <span class="pull-right">
+
+            </span>
+            </div>
+        </form>
+    </div>
 </div>

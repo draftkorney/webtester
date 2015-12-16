@@ -7,6 +7,7 @@
 <%@ taglib prefix="paginations" tagdir="/WEB-INF/tags" %>
 <c:set var="adminPagination" value="${adminPaginationData}" scope="session"/>
 <c:set var="url" value="/admin/home/accountsList.html"/>
+<c:set var="active" value="${adminActive}" scope="page"/>
 <%--@elvariable id="user" type="ua.alex.source.webtester.entities.Account"--%>
 
 <div class="container">

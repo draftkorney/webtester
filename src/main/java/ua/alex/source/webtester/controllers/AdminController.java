@@ -41,6 +41,7 @@ public class AdminController extends AbstractController {
         List<Account> accountList = adminService.getUsers(paginationData.getPage(), count);
         model.addAttribute("adminPaginationData", paginationData);
         model.addAttribute("users", accountList);
+        model.addAttribute("adminActive", "active");
 
         return "admin/accountList";
     }
