@@ -11,7 +11,7 @@ public class ForgotPasswordForm implements IForm {
     @NotNull(message = "form.email.null")
     @NotBlank(message = "form.email.null")
     @Email(message = "form.email.wrong")
-    @MustExist(errorCode = "form.forgot.email.exist")
+    @MustExist(message = "form.forgot.email.exist")
     private String email;
 
     public String getEmail() {

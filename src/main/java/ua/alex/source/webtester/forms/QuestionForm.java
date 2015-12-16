@@ -10,9 +10,9 @@ public class QuestionForm implements IForm {
 
     private Long idQuestion;
 
-    @NotNull(errorCode = "form.question.name.empty")
-    @NotBlank(errorCode = "form.question.name.empty")
-    @Length(min = 6, max = 60, errorCode = "form.question.name.length")
+    @NotNull(message = "form.question.name.empty")
+    @NotBlank(message = "form.question.name.empty")
+    @Length(min = 6, max = 60, message = "form.question.name.length")
     private String name;
 
     @NotNull

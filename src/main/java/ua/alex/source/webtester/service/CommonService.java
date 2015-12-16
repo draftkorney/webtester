@@ -22,4 +22,6 @@ public interface CommonService {
 	List<Role> listAllRoles();
 
 	void sendForgotPassword(ForgotPasswordForm email);
+
+	Account getProfile(long idAccount);
 }

@@ -139,6 +139,11 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public Account getProfile(long idAccount) {
+        return accountDao.getById(idAccount);
+    }
+
+    @Override
     public void sendForgotPassword(ForgotPasswordForm email) {
         Account account = accountDao.getByEmail(email.getEmail());
         emailService.sendForgotPassword(account);

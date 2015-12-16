@@ -9,15 +9,15 @@ import ua.alex.source.webtester.validations.Unique;
 public class AbstractLoginForm implements IForm {
     private static final long serialVersionUID = -8342766271396665602L;
 
-    @NotNull(errorCode = "form.login.null")
-    @NotEmpty(errorCode = "form.login.null")
-    @Length(min = 5, max = 60, errorCode = "form.login.invalid.size")
-    @Unique(errorCode = "form.login.is.exist")
+    @NotNull(message = "form.login.null")
+    @NotEmpty(message = "form.login.null")
+    @Length(min = 5, max = 60, message = "form.login.invalid.size")
+    @Unique(message = "form.login.is.exist")
     private String login;
 
-    @NotNull(errorCode = "form.password.null")
-    @NotEmpty(errorCode = "form.password.null")
-    @Length(min = 6, max = 60, errorCode = "form.password.invalid.size")
+    @NotNull(message = "form.password.null")
+    @NotEmpty(message = "form.password.null")
+    @Length(min = 6, max = 60, message = "form.password.invalid.size")
     private String password;
 
     public String getLogin() {

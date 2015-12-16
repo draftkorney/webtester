@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.alex.source.webtester.ApplicationConstants;
+import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.entities.Role;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
 import ua.alex.source.webtester.forms.ForgotPasswordForm;
@@ -43,6 +44,10 @@ public class CommonController extends AbstractController implements Initializing
 
     @RequestMapping(value = {"/login", "/loginFailed"}, method = RequestMethod.GET)
     public String showLogin(Model model) {
+        if (SecurityUtils.getCurrentAccount() != null) {
+            model.addAttribute("login", SecurityUtils.getCurrentAccount().getUsername());
+            return "alreadylogin";
+        }
         initRoles(model);
         return "login";
     }
@@ -77,6 +82,14 @@ public class CommonController extends AbstractController implements Initializing
         return "redirect:" + getHomeUrl(currentAccount.getRoles());
     }
 
+    @RequestMapping(value = "/profile.html", method = RequestMethod.GET)
+    public String profile(Model model) {
+        CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
+        Account account = commonService.getProfile(currentAccount.getIdAccount());
+        model.addAttribute("profile", account);
+        return "profile";
+    }
+
     @RequestMapping(value = {"/forgot_password.html"}, method = RequestMethod.GET)
     public String forgotPasswordPage(Model model) {
         model.addAttribute("form", new ForgotPasswordForm());
@@ -90,7 +103,7 @@ public class CommonController extends AbstractController implements Initializing
         }
 
         commonService.sendForgotPassword(form);
-        return "forgetpassword";
+        return "forgetpasswordsuccess";
     }
 
     private String getHomeUrl(List<Integer> roles) {

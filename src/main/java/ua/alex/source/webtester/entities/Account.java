@@ -2,12 +2,9 @@ package ua.alex.source.webtester.entities;
 
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.List;
 
 @Entity
@@ -33,7 +30,7 @@ public class Account extends ManagerEntity {
     @Column(name = "fio", nullable = false, length = 200)
     private String fio;
 
-    @Column(name = "confirm", columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE")
+    @Column(name = "confirm", insertable = false)
     private boolean confirm;
 
     @OneToMany(mappedBy = "account")

@@ -10,14 +10,14 @@ import ua.alex.source.webtester.entities.Account;
 public class TestForm implements IForm {
     private static final long serialVersionUID = -3633827335080843887L;
 
-    @NotNull(errorCode = "form.test.name.empty")
-    @NotBlank(errorCode = "form.test.name.empty")
-    @Length(min = 6, max = 60, errorCode = "form.test.name.length")
+    @NotNull(message = "form.test.name.empty")
+    @NotBlank(message = "form.test.name.empty")
+    @Length(min = 6, max = 60, message = "form.test.name.length")
     private String name;
 
-    @NotNull(errorCode = "form.test.name.empty")
-    @NotBlank(errorCode = "from.test.description")
-    @Length(min = 6, max = 60, errorCode = "form.test.description.length")
+    @NotNull(message = "form.test.name.empty")
+    @NotBlank(message = "from.test.description")
+    @Length(min = 6, max = 60, message = "form.test.description.length")
     private String description;
 
     private Integer timePerQuestion;

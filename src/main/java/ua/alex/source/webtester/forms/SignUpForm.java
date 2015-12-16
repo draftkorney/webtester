@@ -11,19 +11,19 @@ import ua.alex.source.webtester.validations.Unique;
 public class SignUpForm extends AbstractLoginForm implements IForm {
     private static final long serialVersionUID = -3633827335080843887L;
 
-    @EqualToField(value = "password",errorCode = "form.signup.confirm.pass.not.equal")
+    @EqualToField(value = "password", message = "form.signup.confirm.pass.not.equal")
     private String confirmPass;
 
-    @NotNull(errorCode = "form.email.null")
-    @NotEmpty(errorCode = "form.email.null")
-    @Length(min = 5, max = 60, errorCode = "form.email.invalid.size")
-    @Unique(errorCode = "form.email.is.exist")
-    @Email(errorCode = "form.email.wrong")
+    @NotNull(message = "form.email.null")
+    @NotEmpty(message = "form.email.null")
+    @Length(min = 5, max = 60, message = "form.email.invalid.size")
+    @Unique(message = "form.email.is.exist")
+    @Email(message = "form.email.wrong")
     private String email;
 
-    @NotNull(errorCode = "form.fio.null")
-    @NotEmpty(errorCode = "form.fio.null")
-    @Length(min = 5, max = 200, errorCode = "form.fio.invalid.size")
+    @NotNull(message = "form.fio.null")
+    @NotEmpty(message = "form.fio.null")
+    @Length(min = 5, max = 200, message = "form.fio.invalid.size")
     private String fio;
 
     public static long getSerialVersionUID() {

@@ -11,9 +11,9 @@ public class AnswerForm implements IForm {
 
     private Long idAnswer;
 
-    @NotNull(errorCode = "form.answer.name.empty")
-    @NotBlank(errorCode = "form.answer.name.empty")
-    @Length(min = 2, max = 255, errorCode = "form.answer.name.invalid.length")
+    @NotNull(message = "form.answer.name.empty")
+    @NotBlank(message = "form.answer.name.empty")
+    @Length(min = 2, max = 255, message = "form.answer.name.invalid.length")
     private String name;
 
     private boolean correct;
