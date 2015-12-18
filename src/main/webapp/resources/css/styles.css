@@ -53,8 +53,34 @@ body {
     margin-bottom: 10px;
 }
 
+.question-list .question-item .question #actionQuestionForm {
+    display: inline;
+}
+
 .question-list .question-item .question-name {
-    font-size: 18px;
+    font-size: 20px;
     /*float: left;*/
     padding-right: 10px;
+}
+
+.question-list .question-item .question {
+    margin-bottom: 10px;
+}
+
+.question-list .question-item .answer #actionAnswerForm {
+    display: inline;
+}
+
+#accountForm\.errors {
+    color: red;
+}
+
+.question-list {
+    margin: 5px 10px;
+}
+
+.question-list .question-item {
+    border: 1px solid #31708f;
+    border-radius: 5px;
+    padding: 5px 5px;
 }

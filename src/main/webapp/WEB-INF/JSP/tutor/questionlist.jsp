@@ -12,27 +12,33 @@
 
 <div class="container">
     <a class="btn btn-info" href="${tutor}/home/testslist.html?page=${testPagination.page}">Back to test list</a>
-    <div class="question-content">
-        <div><a href="<c:url value="${tutor}/addQuestion.html?idTest=${idTest}"/>">Add a new question</a></div>
+    <a href="<c:url value="${tutor}/addQuestion.html?idTest=${idTest}"/>" class="btn btn-success pull-right">
+        Add a new question
+    </a>
 
+    <div class="question-content clearfix">
         <div class="question-list">
             <c:forEach items="${questions}" var="question">
                 <div class="question-item">
-                    <div class="question-name">${question.name}
+                    <div class="question text-center">
+                        <span class="question-name">${question.name}</span>
                         <span>
-                            <a href="<c:url value="${tutor}/editQuestion.html?idQuestion=${question.idQuestion}&idTest=${idTest}"/>">Edit</a>
+                            <a href="<c:url value="${tutor}/editQuestion.html?idQuestion=${question.idQuestion}&idTest=${idTest}"/>">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </a>
                         </span>
 
-                        <span>
-                            <form id="actionQuestionForm" action="${tutor}/delete_question" name="action" method="POST">
-                                <input type="hidden" name="idTest" value="${idTest}">
-                                <input type="hidden" name="idQuestion" value="${question.idQuestion}">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button class="btn" type="submit">Delete</button>
-                            </form>
-                        </span>
+                        <form id="actionQuestionForm" action="${tutor}/delete_question" name="action"
+                              class="form-inline" method="POST">
+                            <input type="hidden" name="idTest" value="${idTest}">
+                            <input type="hidden" name="idQuestion" value="${question.idQuestion}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button class="btn btn-sm btn-default" type="submit">
+                                <span class="glyphicon glyphicon-remove " aria-hidden="true"></span>
+                            </button>
+                        </form>
 
-                        <c:if test="${question.answers.size() < 5}">
+                        <c:if test="${question.answers.size() < 4}">
                         <span>
                             <a href="<c:url value="${tutor}/addAnswer.html?idQuestion=${question.idQuestion}&idTest=${idTest}"/>">
                                 Add a new answer
@@ -40,25 +46,37 @@
                         </span>
                         </c:if>
                     </div>
-                    <c:forEach items="${question.answers}" var="answer">
-                        <div>
-                            <a href="<c:url value="${tutor}/editAnswer.html?idAnswer=${answer.idAnswer}&idQuestion=${question.idQuestion}&idTest=${idTest}"/>">edit</a>
-                            <form id="actionAnswerForm" action="${tutor}/delete_answer" name="action" method="POST">
-                                <input type="hidden" name="idTest" value="${idTest}">
-                                <input type="hidden" name="idAnswer" value="${answer.idAnswer}">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button class="btn" type="submit">Delete</button>
-                            </form>
-                            <c:choose>
-                                <c:when test="${answer.correct}">
-                                    <strong>${answer.name}</strong>
-                                </c:when>
-                                <c:otherwise>
-                                    ${answer.name}
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </c:forEach>
+
+                    <ul>
+                        <c:forEach items="${question.answers}" var="answer">
+
+                                <div class="answer">
+                                    <li>
+                                    <c:choose>
+                                        <c:when test="${answer.correct}">
+                                           <span> <strong>${answer.name}</strong></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <span> ${answer.name}</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <a href="<c:url value="${tutor}/editAnswer.html?idAnswer=${answer.idAnswer}&idQuestion=${question.idQuestion}&idTest=${idTest}"/>">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+
+                                    <form id="actionAnswerForm" action="${tutor}/delete_answer" name="action"
+                                                  method="POST">
+                                        <input type="hidden" name="idTest" value="${idTest}">
+                                        <input type="hidden" name="idAnswer" value="${answer.idAnswer}">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <button type="submit" class="btn btn-sm btn-default" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </form>
+                                    </li>
+                                </div>
+
+                        </c:forEach>
+                    </ul>
+
 
                 </div>
             </c:forEach>

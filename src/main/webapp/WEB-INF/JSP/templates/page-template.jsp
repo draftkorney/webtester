@@ -9,6 +9,7 @@
 <c:set var="tutor" value="/tutor" scope="application"/>
 <c:set var="advanced_tutor" value="/advanced_tutor" scope="application"/>
 <c:set var="admin" value="/admin" scope="application"/>
+<c:set var="student" value="/" scope="application"/>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 "> <![endif]-->
 <!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8 br-ie7"> <![endif]-->
@@ -41,16 +42,18 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav links">
                 <sec:authorize access="hasAnyAuthority('ADMIN')">
-                    <li><a href="${admin}/home/accountsList.html">All Users</a></li>
+                    <li id="admin"><a href="${admin}/home/accountsList.html">All Users</a></li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('ADVANCED_TUTOR')">
-                    <li><a href="${advanced_tutor}/home/testslist.html">All Tests</a>
+                    <li id="advanced_tutor"><a href="${advanced_tutor}/home/testslist.html">All Tests</a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('TUTOR')">
-                    <li><a href="${tutor}/home/testslist.html">Owner Test</a></li>
+                    <li id="tutor"><a href="${tutor}/home/testslist.html">Owner Test</a></li>
                 </sec:authorize>
-                <li><a href="#">Test to Pass</a></li>
+                <sec:authorize access="hasAnyAuthority('STUDENT')">
+                    <li id="student"><a href="#">Test to Pass</a></li>
+                </sec:authorize>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -77,23 +80,25 @@
 
 <script>
     $(document).ready(function () {
-        $(".links li").removeClass("active");
-
+        var _li = $(".links li");
+        _li.removeClass("active");
 
         var admin = '${admin}';
         var advanced_tutor = '${advanced_tutor}';
         var tutor = '${tutor}';
+        var student = '${student}';
+
         var path = location.pathname;
-        var li;
 
         if (path.indexOf(admin) > -1) {
-            li = $(".links li").get(0);
+            $("#admin").addClass("active");
         } else if (path.indexOf(advanced_tutor) > -1) {
-            li = $(".links li").get(1);
+            $("#advanced_tutor").addClass("active");
         } else if (path.indexOf(tutor) > -1) {
-            li = $(".links li").get(2);
+            $("#tutor").addClass("active");
+        }else {
+            $("#student").addClass("active");
         }
-        $(li).addClass("active");
 
     });
 </script>

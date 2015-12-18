@@ -6,38 +6,76 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="container">
-    <h2>Add a New User </h2>
+    <h3 class="text-center">${headerAction}</h3>
 
-    <form:form method="POST" action="${context}${admin}/action_with_account" commandName="accountForm">
-        <div class="form-group">
-            <form:errors  path="*"/>
-        </div>
+    <div class="row">
+        <form:form method="POST" action="${context}${admin}/action_with_account" commandName="accountForm"
+                   cssClass="form-horizontal col-md-6 col-md-offset-3">
+            <div class="form-group">
+                <form:errors path="*"/>
+            </div>
 
-        <div class="form-group">
-            <form:input type="text" cssClass="form-control input-sm" name="login" placeholder="Login" path="login"/>
-        </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Login</label>
 
-        <div class="form-group">
-            <form:input type="text" cssClass="form-control input-sm" name="email" placeholder="Email" path="email"/>
-        </div>
+                <div class="col-sm-10">
+                    <form:input type="text" cssClass="form-control input-sm" name="login" placeholder="Login"
+                                path="login"/>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <form:input type="text" cssClass="form-control input-sm" name="fio" placeholder="FIO" path="fio"/>
-            <form:input type="hidden" path="idAccount"/>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </div>
-        <div class="form-group">
-            <form:checkbox path="roles" value="1" id="adminRole"/>Admin
-            <form:checkbox path="roles" value="2" id="advanceTutorRole"/>Advance Tutor
-            <form:checkbox path="roles" value="3" id="tutorRole"/>Tutor
-            <form:checkbox path="roles" value="4"/>Student
-        </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Email</label>
 
-        <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit">Save</button>
-            <a href="<c:url value="${admin}/home/accountsList.html?page=${adminPagination.page}"/>">Cancel</a>
-        </div>
-    </form:form>
+                <div class="col-sm-10">
+                    <form:input type="text" cssClass="form-control input-sm" name="email" placeholder="Email"
+                                path="email"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Fio</label>
+
+                <div class="col-sm-10">
+                    <form:input type="text" cssClass="form-control input-sm" name="fio" placeholder="FIO" path="fio"/>
+                    <form:input type="hidden" path="idAccount"/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <form:checkbox path="roles" value="1" id="adminRole"/>Admin
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <form:checkbox path="roles" value="2" id="advanceTutorRole"/>Advance Tutor
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <form:checkbox path="roles" value="3" id="tutorRole"/>Tutor
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <form:checkbox path="roles" value="4"/>Student
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <a href="<c:url value="${admin}/home/accountsList.html?page=${adminPagination.page}"/>">Cancel</a>
+                </div>
+            </div>
+        </form:form>
+    </div>
+
 </div>
 <script>
     $(document).ready(function () {

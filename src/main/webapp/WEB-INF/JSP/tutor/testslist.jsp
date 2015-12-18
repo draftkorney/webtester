@@ -11,41 +11,46 @@
 <%--@elvariable id="test" type="ua.alex.source.webtester.entities.Test"--%>
 
 <div class="container">
+    <a href="<c:url value="${tutor}/createTest.html"/>" class="btn btn-success pull-right">Add a new test</a>
+
     <div class="tests-content">
-        <div><a href="<c:url value="${tutor}/createTest.html"/>">Add a new test</a></div>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Time Per Question</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="test" items="${tests}">
                 <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Time Per Question</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <td>${test.name}</td>
+                    <td>${test.description}</td>
+                    <td>${test.timePerQuestion}</td>
+                    <td><a href="<c:url value="${tutor}/home/questions.html?idTest=${test.idTest}"/>">Questions</a>
+                    </td>
+                    <td>
+                        <a href="<c:url value="${tutor}/editTest.html?idTest=${test.idTest}"/>">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <form id="actionForm" action="${tutor}/delete_test" name="action" method="POST">
+                            <input type="hidden" name="idTest" value="${test.idTest}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button class="btn btn-default btn-sm" type="submit" aria-label="remove">
+                                <span class="glyphicon glyphicon-remove " aria-hidden="true"></span>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="test" items="${tests}">
-                    <tr>
-                        <td>${test.name}</td>
-                        <td>${test.description}</td>
-                        <td>${test.timePerQuestion}</td>
-                        <td><a href="<c:url value="${tutor}/home/questions.html?idTest=${test.idTest}"/>">Questions</a>
-                        </td>
-                        <td><a href="<c:url value="${tutor}/editTest.html?idTest=${test.idTest}"/>">Edit</a></td>
-                        <td>
-                            <form id="actionForm" action="${tutor}/delete_test" name="action" method="POST">
-                                <input type="hidden" name="idTest" value="${test.idTest}">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button class="btn" type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            </c:forEach>
+            </tbody>
+        </table>
 
     </div>
 

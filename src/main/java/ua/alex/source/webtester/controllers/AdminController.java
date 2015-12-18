@@ -49,14 +49,18 @@ public class AdminController extends AbstractController {
     @RequestMapping(value = {"/addNewAccount.html", "/editAccount.html"}, method = RequestMethod.GET)
     public String addNewUserPage(@RequestParam(required = false) Long idAccount, Model model) {
         AccountForm account;
+        String header;
 
         if (idAccount == null) {
             account = new AccountForm();
+            header = "Add a new account";
         } else {
             account = accountService.convertToAccountForm(idAccount);
+            header = "Edit account";
         }
 
         model.addAttribute("accountForm", account);
+        model.addAttribute("headerAction", header);
         return "admin/addnewaccount";
     }
 
