@@ -33,4 +33,10 @@ public class QuestionDaoImpl extends AbstractEntityDao<Question> implements Ques
 
         return query.list();
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Question> getQuestionByTestId(long idTest) {
+        return getSession().createCriteria(getEntityClass()).createAlias("test", "t").add(Restrictions.eq("t.id", idTest)).list();
+    }
 }

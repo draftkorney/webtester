@@ -75,6 +75,10 @@ body {
     color: red;
 }
 
+#questionForm\.errors {
+    color: red;
+}
+
 .question-list {
     margin: 5px 10px;
 }
@@ -83,4 +87,23 @@ body {
     border: 1px solid #31708f;
     border-radius: 5px;
     padding: 5px 5px;
+}
+
+.test_info .content table.report td:first-child{
+    text-align: right;
+    width: 1%;
+    border-right: 1px solid #EEE;
+    padding: 2px 4px;
+}
+.test_info .content table.report td{
+    text-align: center;
+    width: 1%;
+    border-bottom: 1px solid #EEE;
+    padding: 2px 4px;
+}
+
+.test_info .content table.report tr.title td{
+    text-align: center;
+    width: 1%;
+    border: 0px none;
 }

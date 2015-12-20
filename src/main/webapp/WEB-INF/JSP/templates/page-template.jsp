@@ -52,7 +52,7 @@
                     <li id="tutor"><a href="${tutor}/home/testslist.html">Owner Test</a></li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('STUDENT')">
-                    <li id="student"><a href="#">Test to Pass</a></li>
+                    <li id="student"><a href="/home/tests.html">Test to Pass</a></li>
                 </sec:authorize>
             </ul>
 
@@ -71,10 +71,10 @@
 <section class="main">
     <decorator:body/>
 </section>
-<footer class="footer navbar-fixed-bottom">
+<%--<footer class="footer">
     <div class="container">Footer</div>
 
-</footer>
+</footer>--%>
 </body>
 
 

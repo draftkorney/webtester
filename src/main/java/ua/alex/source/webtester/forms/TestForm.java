@@ -17,7 +17,7 @@ public class TestForm implements IForm {
 
     @NotNull(message = "form.test.name.empty")
     @NotBlank(message = "from.test.description")
-    @Length(min = 6, max = 60, message = "form.test.description.length")
+    @Length(min = 6, max = 255, message = "form.test.description.length")
     private String description;
 
     private Integer timePerQuestion;

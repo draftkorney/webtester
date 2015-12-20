@@ -18,6 +18,8 @@ public interface TutorService {
 
     List<Question> getQuestionByTestId(int page, Integer count, long idTest);
 
+    List<Question> getQuestionByTestId(long idTest);
+
     Test getTestById(Long idTest);
 
     void saveOrUpdateTest(TestForm testForm);

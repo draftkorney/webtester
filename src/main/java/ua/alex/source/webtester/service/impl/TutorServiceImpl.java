@@ -90,6 +90,11 @@ public class TutorServiceImpl implements TutorService {
     }
 
     @Override
+    public List<Question> getQuestionByTestId(long idTest) {
+        return  questionDao.getQuestionByTestId(idTest);
+    }
+
+    @Override
     @Transactional(readOnly = false, rollbackFor = {RuntimeException.class})
     public void saveOrUpdateQuestion(QuestionForm questionForm) {
 
