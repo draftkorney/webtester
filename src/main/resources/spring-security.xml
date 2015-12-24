@@ -40,7 +40,7 @@
                 invalidate-session="true"
                 delete-cookies="JSESSIONID"
                 logout-url="/logout"/>
-        <security:remember-me key="testOnlineKey" token-repository-ref="tokenRepository"/>
+        <security:remember-me key="testOnlineKey"  token-repository-ref="tokenRepository"/>
 
         <security:session-management session-fixation-protection="migrateSession"
                                      invalid-session-url="/invalidSession">
