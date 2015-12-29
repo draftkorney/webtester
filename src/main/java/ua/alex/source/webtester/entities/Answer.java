@@ -60,4 +60,24 @@ public class Answer extends ManagerEntity {
     public Serializable getId() {
         return getIdAnswer();
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Answer)) return false;
+        if (!super.equals(o)) return false;
+
+        Answer answer = (Answer) o;
+
+        return idAnswer.equals(answer.idAnswer);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + idAnswer.hashCode();
+        return result;
+    }
 }

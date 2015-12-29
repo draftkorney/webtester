@@ -19,5 +19,6 @@
             <dt>fio</dt>
             <dd>${profile.fio}</dd>
         </dl>
+        <a href="/show_result.html">Test Results</a>
     </div>
 </div>

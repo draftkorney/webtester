@@ -20,15 +20,15 @@ public class Question extends ManagerEntity {
     @JoinColumn(name = "id_test", nullable = false)
     private Test test;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     private List<Answer> answers;
-
-    public void setIdQuestion(Long idQuestion) {
-        this.idQuestion = idQuestion;
-    }
 
     public Long getIdQuestion() {
         return idQuestion;
+    }
+
+    public void setIdQuestion(Long idQuestion) {
+        this.idQuestion = idQuestion;
     }
 
     public String getName() {

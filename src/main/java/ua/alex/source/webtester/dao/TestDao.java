@@ -11,4 +11,5 @@ public interface TestDao extends IEntityDao<Test> {
     List<Test> getTestByAccountId(int row, int count, Long idAccount);
 
 
+    List<Test> findTestForPass(int row, int count);
 }

@@ -1,7 +1,12 @@
-#springMessage("email.hi") $firstName!
-<br/>
-#springMessage("email.body")
-<br/>
-<a href="$props.baseSite/confirmationEmail?hashCode=$hashCode">$props.baseSite/confirmationEmail</a>
-<a href="google.com">gooogle</a>
-<br/>
+<html>
+<body>
+<div>
+    #set( $url = "$props.baseSite/confirmationEmail?hashCode=$hashCode")
+    #springMessage("email.hi") $firstName!
+    <br/>
+    #springMessage("email.body")
+    <br/>
+    <a href="${url}">$props.baseSite/confirmationEmail</a>
+</div>
+</body>
+</html>

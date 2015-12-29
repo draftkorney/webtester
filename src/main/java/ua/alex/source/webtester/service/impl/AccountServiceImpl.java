@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.alex.source.webtester.dao.AccountDao;
 import ua.alex.source.webtester.entities.Account;
-import ua.alex.source.webtester.exceptions.InvalidUserInputException;
 import ua.alex.source.webtester.forms.AccountForm;
+import ua.alex.source.webtester.forms.EditAccountForm;
+import ua.alex.source.webtester.security.SecurityUtils;
 import ua.alex.source.webtester.service.AccountService;
 import ua.alex.source.webtester.utils.CommonUtils;
 import ua.alex.source.webtester.utils.ReflectionUtils;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -81,5 +83,23 @@ public class AccountServiceImpl implements AccountService {
         accountForm.setRoles(CommonUtils.convertRoles(account.getAccountRoles()));
 
         return accountForm;
+    }
+
+    @Override
+    public EditAccountForm convertToAccountEditForm(Long idAccount) {
+        Account account = accountDao.getById(SecurityUtils.getCurrentIdAccount());
+
+        EditAccountForm editAccountForm = new EditAccountForm();
+        ReflectionUtils.copyByFields(editAccountForm, account);
+
+        return editAccountForm;
+    }
+
+    @Override
+    public void update(EditAccountForm profile) {
+        Account account = getById(profile.getIdAccount());
+        ReflectionUtils.copyByFields(account, profile);
+        account.setUpdated(new Timestamp(System.currentTimeMillis()));
+        accountDao.update(account);
     }
 }

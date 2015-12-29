@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.alex.source.webtester.exceptions.TestResultSessionInvalid;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,13 @@ public class DefaultExceptionHandler {
         ModelAndView modelAndView = new ModelAndView("errors");
         LOGGER.error("Internal Server Error - ", exception);
         modelAndView.addObject("errors", "Opss! Some error occurs.");
+        return modelAndView;
+    }
+
+    @ExceptionHandler(value = TestResultSessionInvalid.class)
+    public ModelAndView exception(TestResultSessionInvalid exception, HttpServletRequest req, WebRequest request) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/home/tests.html");
+        LOGGER.error("Internal Server Error - ", exception);
         return modelAndView;
     }
 }

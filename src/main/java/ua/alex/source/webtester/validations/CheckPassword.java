@@ -1,15 +1,13 @@
 package ua.alex.source.webtester.validations;
 
-
-import ua.alex.source.webtester.validations.impl.EmailConstraintValidator;
+import ua.alex.source.webtester.validations.impl.PasswordConstraintValidator;
 
 import java.lang.annotation.*;
 
 @Documented
-@net.sf.oval.configuration.annotation.Constraint(checkWith = EmailConstraintValidator.class)
+@net.sf.oval.configuration.annotation.Constraint(checkWith = PasswordConstraintValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Email {
+public @interface CheckPassword {
     String message() default "not.correct";
-
 }

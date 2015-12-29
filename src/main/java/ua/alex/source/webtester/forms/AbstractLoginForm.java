@@ -6,7 +6,9 @@ import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import ua.alex.source.webtester.validations.Unique;
 
-public class AbstractLoginForm implements IForm {
+import java.io.Serializable;
+
+public class AbstractLoginForm implements IUnique, IForm {
     private static final long serialVersionUID = -8342766271396665602L;
 
     @NotNull(message = "form.login.null")
@@ -19,6 +21,11 @@ public class AbstractLoginForm implements IForm {
     @NotEmpty(message = "form.password.null")
     @Length(min = 6, max = 60, message = "form.password.invalid.size")
     private String password;
+
+    @Override
+    public Serializable getId() {
+        return null;
+    }
 
     public String getLogin() {
         return login;

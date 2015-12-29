@@ -10,4 +10,6 @@ public interface QuestionDao extends IEntityDao<Question> {
     List<Question> getQuestionByTestId(int row, int count, Long idTest);
 
     List<Question> getQuestionByTestId(long idTest);
+
+    List<Question> getQuestionByTestIdWithAnswers(Long idTest);
 }

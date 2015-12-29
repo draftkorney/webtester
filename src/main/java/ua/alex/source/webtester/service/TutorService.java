@@ -39,4 +39,6 @@ public interface TutorService {
     void deleteQuestion(Long idQuestion);
 
     void deleteAnswer(Long idAnswer);
+
+    List<Question> getQuestionByTestIdWithAnswers(Long idTest);
 }

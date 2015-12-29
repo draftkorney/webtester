@@ -26,6 +26,7 @@ public class TestResult extends ManagerEntity {
     @JoinColumn(name = "id_account", nullable = false)
     private Account account;
 
+
     public long getIdTestResult() {
         return idTestResult;
     }

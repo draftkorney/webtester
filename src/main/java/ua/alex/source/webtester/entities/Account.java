@@ -36,6 +36,13 @@ public class Account extends ManagerEntity {
     @OneToMany(mappedBy = "account")
     private List<AccountRole> accountRoles;
 
+    public Account() {
+    }
+
+    public Account(Long idAccount) {
+        this.idAccount = idAccount;
+    }
+
     public Long getIdAccount() {
         return idAccount;
     }

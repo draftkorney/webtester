@@ -4,18 +4,19 @@ package ua.alex.source.webtester.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import ua.alex.source.webtester.entities.Answer;
-import ua.alex.source.webtester.entities.Question;
-import ua.alex.source.webtester.entities.Test;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import ua.alex.source.webtester.entities.*;
+import ua.alex.source.webtester.exceptions.TestResultSessionInvalid;
+import ua.alex.source.webtester.forms.QuestionData;
+import ua.alex.source.webtester.security.SecurityUtils;
 import ua.alex.source.webtester.service.StudentService;
 import ua.alex.source.webtester.service.TutorService;
 import ua.alex.source.webtester.utils.PaginationData;
+import ua.alex.source.webtester.utils.SpringUtil;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -27,6 +28,11 @@ public class StudentController extends AbstractController {
 
     @Autowired
     private TutorService tutorService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Answer.class, new QuestionEditor());
+    }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home() {
@@ -54,14 +60,32 @@ public class StudentController extends AbstractController {
         return "student/passtest";
     }
 
+    @RequestMapping(value = "/show_result.html", method = RequestMethod.GET)
+    public String pagePass(Model model) {
+        List<TestResult> testResults = studentService.getTestResult(SecurityUtils.getCurrentIdAccount());
+        model.addAttribute("testResults", testResults);
+        return "student/showresult";
+    }
+
     @RequestMapping(value = "/start_pass_test", method = RequestMethod.GET)
     public String startPassTest(@RequestParam Long idTest, Model model, HttpSession session) {
         Test test = tutorService.getTestById(idTest);
-        List<Question> questions = tutorService.getQuestionByTestId(idTest);
+        List<Question> questions = tutorService.getQuestionByTestIdWithAnswers(idTest);
 
         session.setAttribute("currentQuestion", 1);
         session.setAttribute("test", test);
         session.setAttribute("question", questions);
+
+        TestResult testResult = (TestResult) session.getAttribute("testResult");
+        if (testResult == null) {
+            testResult = new TestResult();
+            testResult.setAccount(new Account(SecurityUtils.getCurrentIdAccount()));
+            testResult.setAllCount(questions.size());
+            testResult.setTestName(test.getName());
+            testResult.setCreated(new Timestamp(System.currentTimeMillis()));
+            session.setAttribute("testResult", testResult);
+        }
+
         return "redirect:/show_next_question";
     }
 
@@ -81,24 +105,36 @@ public class StudentController extends AbstractController {
             currentQuestion = 1;
         }
 
+        if (currentQuestion > questions.size()) {
+            studentService.saveResultToDB((TestResult) session.getAttribute("testResult"));
+            session.removeAttribute("testResult");
+            return "redirect:/show_result.html";
+        }
+
         Question question = questions.get(currentQuestion - 1);
-        addDefaultAnswer(question);
+        QuestionData questionData = new QuestionData(question);
+        model.addAttribute("questionForAnswer", questionData);
         model.addAttribute("question", question);
-        model.addAttribute("test", test);
         return "student/showquestion";
     }
 
-    private void addDefaultAnswer(Question question) {
-        Answer answer = new Answer();
-        answer.setCorrect(false);
-        answer.setName("Don't know");
-        question.getAnswers().add(answer);
+    @RequestMapping(value = "/answered", method = RequestMethod.POST)
+    public String saveAnswerFromStudent(@ModelAttribute QuestionData questionForAnswer, Model model, HttpSession session) throws TestResultSessionInvalid {
+        saveTestResultToSession(questionForAnswer, session);
+        Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
+        session.setAttribute("currentQuestion", ++currentQuestion);
+        return "redirect:/show_next_question";
     }
 
-    @RequestMapping(value = "/answered", method = RequestMethod.POST)
-    public String saveAnswerFromStudent(@ModelAttribute Question question, Model model, HttpSession session) {
+    private void saveTestResultToSession(QuestionData questionForAnswer, HttpSession session) throws TestResultSessionInvalid {
+        int correct = studentService.equalsResult(questionForAnswer);
 
-        return "redirect:/show_next_question";
+        TestResult testResult = (TestResult) session.getAttribute("testResult");
+        if (testResult == null) {
+            throw new TestResultSessionInvalid("Session does not contain test result");
+        }
+        testResult.setCorrectCount(testResult.getCorrectCount() + correct);
+        session.setAttribute("testResult", testResult);
     }
 
 

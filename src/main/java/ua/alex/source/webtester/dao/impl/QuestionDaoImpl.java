@@ -18,7 +18,10 @@ public class QuestionDaoImpl extends AbstractEntityDao<Question> implements Ques
 
     @Override
     public int countQuestionsByTestId(long testId) {
-        return getSession().createCriteria(getEntityClass()).createAlias("test", "t").add(Restrictions.eq("t.id", testId)).list().size();
+        String q = "FROM Question q WHERE q.test.id = :idTest";
+        Query query = getSession().createQuery(q);
+        query.setParameter("idTest", testId);
+        return query.list().size();
     }
 
     @Override
@@ -37,6 +40,17 @@ public class QuestionDaoImpl extends AbstractEntityDao<Question> implements Ques
     @Override
     @SuppressWarnings("unchecked")
     public List<Question> getQuestionByTestId(long idTest) {
-        return getSession().createCriteria(getEntityClass()).createAlias("test", "t").add(Restrictions.eq("t.id", idTest)).list();
+        String q = "FROM Question q WHERE q.test.id = :idTest";
+        Query query = getSession().createQuery(q);
+        query.setParameter("idTest", idTest);
+        return query.list();
+    }
+
+    @Override
+    public List<Question> getQuestionByTestIdWithAnswers(Long idTest) {
+        String q = "FROM Question q WHERE q.test.id = :idTest AND q.answers.size > 0";
+        Query query = getSession().createQuery(q);
+        query.setParameter("idTest", idTest);
+        return query.list();
     }
 }

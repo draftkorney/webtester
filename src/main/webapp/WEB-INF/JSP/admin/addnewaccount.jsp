@@ -19,7 +19,7 @@
                 <label class="control-label col-sm-2">Login</label>
 
                 <div class="col-sm-10">
-                    <form:input type="text" cssClass="form-control input-sm" name="login" placeholder="Login"
+                    <form:input type="text" cssClass="form-control input" name="login" placeholder="Login"
                                 path="login"/>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <label class="control-label col-sm-2">Email</label>
 
                 <div class="col-sm-10">
-                    <form:input type="text" cssClass="form-control input-sm" name="email" placeholder="Email"
+                    <form:input type="text" cssClass="form-control input" name="email" placeholder="Email"
                                 path="email"/>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <label class="control-label col-sm-2">Fio</label>
 
                 <div class="col-sm-10">
-                    <form:input type="text" cssClass="form-control input-sm" name="fio" placeholder="FIO" path="fio"/>
+                    <form:input type="text" cssClass="form-control input" name="fio" placeholder="FIO" path="fio"/>
                     <form:input type="hidden" path="idAccount"/>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </div>

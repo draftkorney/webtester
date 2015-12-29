@@ -9,9 +9,9 @@
     <h3>Edit Profile</h3>
 
     <div class="tests-content">
-        <form:form method="POST" action="${context}/edit_prodile" commandName="profile">
+        <form:form method="POST" action="${context}/edit_profile" commandName="profile">
             <div class="form-group">
-                <form:errors class="form-control input-lg" path="*"/>
+                <form:errors  path="*"/>
             </div>
 
             <div class="form-group">
@@ -22,9 +22,21 @@
                 <form:input type="text" cssClass="form-control input" placeholder="fio" path="fio"/>
             </div>
 
+            <div class="form-group">
+                <form:input type="text" cssClass="form-control input" placeholder="old password" path="oldP"/>
+            </div>
+
+            <div class="form-group">
+                <form:input type="text" cssClass="form-control input" placeholder="new password" path="newP"/>
+            </div>
+
+            <div class="form-group">
+                <form:input type="text" cssClass="form-control input" placeholder="confirm new password" path="confirmNP"/>
+            </div>
 
 
             <div class="form-group">
+                <form:input type="hidden" path="idAccount"/>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
 

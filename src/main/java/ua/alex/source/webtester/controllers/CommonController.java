@@ -12,6 +12,7 @@ import ua.alex.source.webtester.ApplicationConstants;
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.entities.Role;
 import ua.alex.source.webtester.exceptions.InvalidUserInputException;
+import ua.alex.source.webtester.forms.EditAccountForm;
 import ua.alex.source.webtester.forms.ForgotPasswordForm;
 import ua.alex.source.webtester.forms.SignUpForm;
 import ua.alex.source.webtester.security.CurrentAccount;
@@ -60,8 +61,9 @@ public class CommonController extends AbstractController implements Initializing
             return "registration";
         }
 
-        commonService.signUp(signUpForm);
-        return "redirect:" + redirects.get(ApplicationConstants.STUDENT_ROLE);
+        Account a = commonService.signUp(signUpForm);
+        SecurityUtils.authentificate(a);
+        return "redirect:/home";
     }
 
     @RequestMapping(value = "/confirmationEmail", method = RequestMethod.GET)
@@ -88,6 +90,24 @@ public class CommonController extends AbstractController implements Initializing
         Account account = commonService.getProfile(currentAccount.getIdAccount());
         model.addAttribute("profile", account);
         return "profile";
+    }
+
+    @RequestMapping(value = "/edit_profile.html", method = RequestMethod.GET)
+    public String editProfilePage(Model model) {
+        EditAccountForm account = accountService.convertToAccountEditForm(SecurityUtils.getCurrentIdAccount());
+        model.addAttribute("profile", account);
+        return "editprofile";
+    }
+
+    @RequestMapping(value = "/edit_profile", method = RequestMethod.POST)
+    public String editProfile(@Valid @ModelAttribute("profile") EditAccountForm profile, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            return "editprofile";
+        }
+
+        accountService.update(profile);
+        return "redirect:profile.html";
     }
 
     @RequestMapping(value = {"/forgot_password.html"}, method = RequestMethod.GET)

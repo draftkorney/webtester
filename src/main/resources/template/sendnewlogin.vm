@@ -4,7 +4,7 @@
 <div>
     #if($isNewLogin)
         #springMessage("email.admin.change.login.body")
-        <strong>$login</strong>
+        <strong>${login}</strong>
     #end
 </div>
 <div>

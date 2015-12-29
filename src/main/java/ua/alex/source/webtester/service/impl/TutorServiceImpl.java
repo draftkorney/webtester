@@ -139,6 +139,11 @@ public class TutorServiceImpl implements TutorService {
     }
 
     @Override
+    public List<Question> getQuestionByTestIdWithAnswers(Long idTest) {
+        return  questionDao.getQuestionByTestIdWithAnswers(idTest);
+    }
+
+    @Override
     public void deleteQuestion(Long idQuestion) {
         questionDao.deleteById(idQuestion);
     }

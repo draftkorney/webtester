@@ -1,5 +1,6 @@
 package ua.alex.source.webtester.service.impl;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import ua.alex.source.webtester.entities.AccountRegistration;
 import ua.alex.source.webtester.service.EmailService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -26,6 +28,7 @@ import java.util.Map;
 
 @Service("emailService")
 public class EmailServiceStub implements EmailService {
+    private static final Logger LOGGER = Logger.getLogger(AdminServiceImpl.class);
 
     @Autowired
     private JavaMailSender sender;
@@ -59,7 +62,9 @@ public class EmailServiceStub implements EmailService {
         param.put("pathTemplate", templateBodyLocation);
         param.put("subject", title);
 
+        LOGGER.info("Send confirm email...");
         sendEmail(param, fromEmail, user.getAccount().getEmail());
+        LOGGER.info("email was sent successfully...");
     }
 
     @Override
@@ -96,14 +101,13 @@ public class EmailServiceStub implements EmailService {
             this.put("isNewLogin", isNewLogin);
             this.put("isNewEmail", isNewEmail);
             this.put("springMacroRequestContext", new RequestContext(getRequest()));
+            if (isNewEmail) {
+                this.put("email", account.getEmail());
+            }
+            if (isNewLogin) {
+                this.put("login", account.getLogin());
+            }
         }});
-
-        if (isNewEmail) {
-            param.put("email", account.getEmail());
-        }
-        if (isNewLogin) {
-            param.put("login", account.getLogin());
-        }
 
         param.put("pathTemplate", templateBodyLocation);
         param.put("subject", title);
@@ -154,6 +158,7 @@ public class EmailServiceStub implements EmailService {
             message.setText(text, true);
         };
 
+        LOGGER.info("Sending email to: " + Arrays.toString(to));
         this.sender.send(preparator);
     }
 

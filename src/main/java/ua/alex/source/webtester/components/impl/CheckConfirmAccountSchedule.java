@@ -13,7 +13,7 @@ public class CheckConfirmAccountSchedule {
     @Autowired
     private AccountDao accountDao;
 
-    @Scheduled(cron = "59 58 23 * * ?") // every day at 23:58:59
+    @Scheduled(cron = "00 45 0 * * ?") // every day at 23:58:59
     public void check() {
         LOGGER.info("schedule is being run");
     }

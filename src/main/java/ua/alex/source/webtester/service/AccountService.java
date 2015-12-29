@@ -3,6 +3,7 @@ package ua.alex.source.webtester.service;
 
 import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.forms.AccountForm;
+import ua.alex.source.webtester.forms.EditAccountForm;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface AccountService {
     Account getById(Long idAccount);
 
     AccountForm convertToAccountForm(Long idAccount);
+    EditAccountForm convertToAccountEditForm(Long idAccount);
 
     Account getByUniqueField(String uniqueValue, String uniqueField);
+
+    void update(EditAccountForm profile);
 }

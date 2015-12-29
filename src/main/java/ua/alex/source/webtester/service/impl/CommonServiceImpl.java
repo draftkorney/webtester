@@ -23,6 +23,7 @@ import ua.alex.source.webtester.service.CommonService;
 import ua.alex.source.webtester.service.EmailService;
 import ua.alex.source.webtester.utils.ReflectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -87,6 +88,10 @@ public class CommonServiceImpl implements CommonService {
         AccountRole ar = entityBuilder.buildAccountRole(a, r);
         accountRoleDao.save(ar);
 
+        List<AccountRole> accountRoles = new ArrayList<>();
+        accountRoles.add(ar);
+        a.setAccountRoles(accountRoles);
+
         if (sendVerificationEmail) {
             AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(a);
             registrationDao.save(accountRegistration);
@@ -127,7 +132,7 @@ public class CommonServiceImpl implements CommonService {
         } else {
             SignUpForm form = new SignUpForm();
             form.setEmail(user.getEmail());
-            form.setFio(user.getLastName() + " " + user.getFirstName() + " " + user.getMiddleName());
+            form.setFio(user.getName());
             form.setLogin(user.getEmail());
 
             UUID pwd = UUID.randomUUID();//generate temp password

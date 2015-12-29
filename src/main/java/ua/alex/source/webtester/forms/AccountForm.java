@@ -5,9 +5,10 @@ import net.sf.oval.constraint.*;
 import ua.alex.source.webtester.validations.Email;
 import ua.alex.source.webtester.validations.Unique;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AccountForm implements IForm {
+public class AccountForm implements IUnique, IForm {
 
     Long idAccount;
 
@@ -32,6 +33,11 @@ public class AccountForm implements IForm {
     @NotNull(message = "form.roles.null")
     @Size(min = 1, max = 4, message = "form.roles.invalid.size")
     private List<Integer> roles;
+
+    @Override
+    public Serializable getId() {
+        return this.idAccount;
+    }
 
     public String getLogin() {
         return login;
