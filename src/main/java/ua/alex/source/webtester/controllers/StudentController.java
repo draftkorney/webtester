@@ -13,19 +13,24 @@ import ua.alex.source.webtester.security.SecurityUtils;
 import ua.alex.source.webtester.service.StudentService;
 import ua.alex.source.webtester.service.TutorService;
 import ua.alex.source.webtester.utils.PaginationData;
-import ua.alex.source.webtester.utils.SpringUtil;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
 public class StudentController extends AbstractController {
 
+    private static final String CURRENT_QUESTION = "currentQuestion";
+    private static final String PREVIOUS_QUESTION = "previousQuestion";
+    private static final String TEST_IS_STARTED = "testStarted";
+    private static final String TEST_RESULT = "testResult";
+    private static final String QUESTIONS = "questions";
+
     @Autowired
     protected StudentService studentService;
-
     @Autowired
     private TutorService tutorService;
 
@@ -45,7 +50,7 @@ public class StudentController extends AbstractController {
         List<Test> testList;
 
         testList = studentService.getTestsForPass(page, count);
-        paginationData = new PaginationData(testList.size(), count, page);
+        paginationData = new PaginationData(studentService.getTestsCountForPass(), count, page);
 
         model.addAttribute("testToPassPaginationData", paginationData);
         model.addAttribute("tests", testList);
@@ -61,9 +66,14 @@ public class StudentController extends AbstractController {
     }
 
     @RequestMapping(value = "/show_result.html", method = RequestMethod.GET)
-    public String pagePass(Model model) {
-        List<TestResult> testResults = studentService.getTestResult(SecurityUtils.getCurrentIdAccount());
+    public String pagePass(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer count, Model model) {
+        PaginationData paginationData;
+        paginationData = new PaginationData(studentService.getCountTestResult(SecurityUtils.getCurrentIdAccount()), count, page);
+
+        List<TestResult> testResults = studentService.getTestResult(SecurityUtils.getCurrentIdAccount(), page, count);
         model.addAttribute("testResults", testResults);
+        model.addAttribute("testResultPaginationData", paginationData);
+
         return "student/showresult";
     }
 
@@ -72,69 +82,81 @@ public class StudentController extends AbstractController {
         Test test = tutorService.getTestById(idTest);
         List<Question> questions = tutorService.getQuestionByTestIdWithAnswers(idTest);
 
-        session.setAttribute("currentQuestion", 1);
-        session.setAttribute("test", test);
-        session.setAttribute("question", questions);
+        session.setAttribute(CURRENT_QUESTION, 1);
+        session.setAttribute(PREVIOUS_QUESTION, 0);
+        session.setAttribute(TEST_IS_STARTED, true);
+        session.setAttribute(QUESTIONS, questions);
 
-        TestResult testResult = (TestResult) session.getAttribute("testResult");
-        if (testResult == null) {
-            testResult = new TestResult();
-            testResult.setAccount(new Account(SecurityUtils.getCurrentIdAccount()));
-            testResult.setAllCount(questions.size());
-            testResult.setTestName(test.getName());
-            testResult.setCreated(new Timestamp(System.currentTimeMillis()));
-            session.setAttribute("testResult", testResult);
-        }
+        TestResult testResult = new TestResult();
+        testResult.setAccount(new Account(SecurityUtils.getCurrentIdAccount()));
+        testResult.setAllCount(questions.size());
+        testResult.setTestName(test.getName());
+        testResult.setCreated(new Timestamp(System.currentTimeMillis()));
+        session.setAttribute(TEST_RESULT, testResult);
 
         return "redirect:/show_next_question";
     }
 
     @RequestMapping(value = "/show_next_question", method = RequestMethod.GET)
-    public String nextQuestion(Model model, HttpSession session) {
+    public String nextQuestion(@CookieValue(value = "time", defaultValue = "-2") Integer timeCookie, Model model, HttpSession session) {
 
-        Test test = (Test) session.getAttribute("test");
+        boolean testIsStarted = (boolean) session.getAttribute(TEST_IS_STARTED);
 
-        if (test == null) {
+        if (!testIsStarted) {
             return "redirect:/home/tests.html";
         }
 
-        List<Question> questions = (List<Question>) session.getAttribute("question");
-        Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
+        List<Question> questions = (List<Question>) session.getAttribute(QUESTIONS);
+        Integer currentQuestion = (Integer) session.getAttribute(CURRENT_QUESTION);
+        Integer previousQuestion = (Integer) session.getAttribute(PREVIOUS_QUESTION);
 
-        if (currentQuestion == null) {
-            currentQuestion = 1;
-        }
 
         if (currentQuestion > questions.size()) {
-            studentService.saveResultToDB((TestResult) session.getAttribute("testResult"));
-            session.removeAttribute("testResult");
+            studentService.saveResultToDB((TestResult) session.getAttribute(TEST_RESULT));
+            session.removeAttribute(TEST_RESULT);
+            session.removeAttribute(TEST_IS_STARTED);
+            session.removeAttribute(CURRENT_QUESTION);
+            session.removeAttribute(PREVIOUS_QUESTION);
+            session.removeAttribute(QUESTIONS);
             return "redirect:/show_result.html";
         }
 
         Question question = questions.get(currentQuestion - 1);
         QuestionData questionData = new QuestionData(question);
+
+        if (Objects.equals(currentQuestion, previousQuestion)) {
+            int currentTime = timeCookie < 0 ? questionData.getTime() : timeCookie;
+
+            if (currentTime > questionData.getTime()) {
+                currentTime = 2;
+            }
+
+            questionData.setCurrentTime(currentTime);
+        }
+
         model.addAttribute("questionForAnswer", questionData);
         model.addAttribute("question", question);
+        session.setAttribute(PREVIOUS_QUESTION, currentQuestion);
         return "student/showquestion";
     }
 
     @RequestMapping(value = "/answered", method = RequestMethod.POST)
     public String saveAnswerFromStudent(@ModelAttribute QuestionData questionForAnswer, Model model, HttpSession session) throws TestResultSessionInvalid {
         saveTestResultToSession(questionForAnswer, session);
-        Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
-        session.setAttribute("currentQuestion", ++currentQuestion);
+        Integer currentQuestion = (Integer) session.getAttribute(CURRENT_QUESTION);
+        session.setAttribute(CURRENT_QUESTION, ++currentQuestion);
         return "redirect:/show_next_question";
     }
 
     private void saveTestResultToSession(QuestionData questionForAnswer, HttpSession session) throws TestResultSessionInvalid {
         int correct = studentService.equalsResult(questionForAnswer);
 
-        TestResult testResult = (TestResult) session.getAttribute("testResult");
+        TestResult testResult = (TestResult) session.getAttribute(TEST_RESULT);
         if (testResult == null) {
             throw new TestResultSessionInvalid("Session does not contain test result");
         }
         testResult.setCorrectCount(testResult.getCorrectCount() + correct);
-        session.setAttribute("testResult", testResult);
+        session.setAttribute(TEST_RESULT, testResult);
     }
 
 

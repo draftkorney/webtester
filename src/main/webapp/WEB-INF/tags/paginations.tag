@@ -35,7 +35,7 @@
                 <a href="${url}?page=${paginationData.page+1}">Next</a>
             </li>
         </c:if>
-        <c:if test="${paginationData.countPage>1}">
+        <c:if test="${paginationData.countPage>1 && paginationData.page < paginationData.countPage}">
 
             <li>
                 <a href="${url}?page=${paginationData.countPage}">Last</a>

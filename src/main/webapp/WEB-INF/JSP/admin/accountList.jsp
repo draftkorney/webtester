@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="paginations" tagdir="/WEB-INF/tags" %>
 <c:set var="adminPagination" value="${adminPaginationData}" scope="session"/>
-<c:set var="url" value="/admin/home/accountsList.html"/>
+
 <%--@elvariable id="user" type="ua.alex.source.webtester.entities.Account"--%>
 
 <div class="container">
@@ -59,6 +59,6 @@
         </div>
     </div>
 
-    <paginations:paginations paginationData="${adminPagination}" url="${url}"/>
+    <paginations:paginations paginationData="${adminPagination}" url="${admin_url_list}"/>
 
 </div>

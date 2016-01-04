@@ -39,11 +39,20 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public int getTestsCountForPass() {
+        return testDao.findTestCountForPass();
+    }
+
+    @Override
     public int equalsResult(QuestionData questionForAnswer) {
         Question question = questionDao.getById(questionForAnswer.getIdQuestion());
         List<Answer> answers = question.getAnswers();
         List<Answer> correctAnswer = getCorrectAnswer(answers);
         List<Answer> answered = questionForAnswer.getAnswerList();
+
+        if (answered == null || answered.isEmpty()) {
+            return 0;
+        }
 
         boolean isCorrect = CollectionUtils.isEqualCollection(correctAnswer, answered);
         return isCorrect ? 1 : 0;
@@ -59,6 +68,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<TestResult> getTestResult(long currentIdAccount) {
         return testResultDao.getResult(currentIdAccount);
+    }
+
+    @Override
+    public List<TestResult> getTestResult(long currentIdAccount, Integer page, Integer count) {
+        return testResultDao.getResult(currentIdAccount, page, count);
+    }
+
+    @Override
+    public int getCountTestResult(long currentIdAccount) {
+        return testResultDao.getResultCount(currentIdAccount);
     }
 
     private List<Answer> getCorrectAnswer(List<Answer> answers) {

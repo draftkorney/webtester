@@ -10,6 +10,13 @@
 <c:set var="advanced_tutor" value="/advanced_tutor" scope="application"/>
 <c:set var="admin" value="/admin" scope="application"/>
 <c:set var="student" value="/" scope="application"/>
+
+<c:set var="admin_url_list" value="${admin}/home/accountsList.html" scope="application"/>
+<c:set var="advance_tutor_url_list" value="${advanced_tutor}/home/testslist.html" scope="application"/>
+<c:set var="tutor_url_list" value="${tutor}/home/testslist.html" scope="application"/>
+<c:set var="student_url_list" value="/home/tests.html" scope="application"/>
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 "> <![endif]-->
 <!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8 br-ie7"> <![endif]-->
@@ -27,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css.map?v=${CSS_JS_VERSION}"/>
     <script src="${context}/resources/js/jquery-1.10.2.js?v=${CSS_JS_VERSION}"></script>
     <script src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
+    <script src="${context}/resources/js/jquery.cookie.js?v=${CSS_JS_VERSION}"></script>
 </head>
 
 
@@ -42,17 +50,17 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav links">
                 <sec:authorize access="hasAnyAuthority('ADMIN')">
-                    <li id="admin"><a href="${admin}/home/accountsList.html">All Users</a></li>
+                    <li id="admin"><a href="${admin_url_list}">All users</a></li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('ADVANCED_TUTOR')">
-                    <li id="advanced_tutor"><a href="${advanced_tutor}/home/testslist.html">All Tests</a>
+                    <li id="advanced_tutor"><a href="${advance_tutor_url_list}">All tests</a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('TUTOR')">
-                    <li id="tutor"><a href="${tutor}/home/testslist.html">Owner Test</a></li>
+                    <li id="tutor"><a href="${tutor_url_list}">Owner tests</a></li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('STUDENT')">
-                    <li id="student"><a href="/home/tests.html">Test to Pass</a></li>
+                    <li id="student"><a href="${student_url_list}">Tests for passing</a></li>
                 </sec:authorize>
             </ul>
 
@@ -83,10 +91,10 @@
         var _li = $(".links li");
         _li.removeClass("active");
 
-        var admin = '${admin}';
-        var advanced_tutor = '${advanced_tutor}';
-        var tutor = '${tutor}';
-        var student = '${student}';
+        var admin = '${admin_url_list}';
+        var advanced_tutor = '${advance_tutor_url_list}';
+        var tutor = '${tutor_url_list}';
+        var student = '${student_url_list}';
 
         var path = location.pathname;
 
@@ -96,7 +104,7 @@
             $("#advanced_tutor").addClass("active");
         } else if (path.indexOf(tutor) > -1) {
             $("#tutor").addClass("active");
-        }else {
+        }else if(path.indexOf(student) > -1){
             $("#student").addClass("active");
         }
 

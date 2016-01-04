@@ -6,7 +6,6 @@
 <%@ taglib prefix="paginations" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="testToPassPagination" value="${testToPassPaginationData}" scope="session"/>
-<c:set var="url" value="/home/tests.html"/>
 
 <%--@elvariable id="test" type="ua.alex.source.webtester.entities.Test"--%>
 
@@ -45,7 +44,7 @@
 
     </div>
 
-    <paginations:paginations paginationData="${testToPassPagination}" url="${url}"/>
+    <paginations:paginations paginationData="${testToPassPagination}" url="${student_url_list}"/>
 
 </div>
 <script>

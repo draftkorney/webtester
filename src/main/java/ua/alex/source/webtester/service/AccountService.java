@@ -5,6 +5,7 @@ import ua.alex.source.webtester.entities.Account;
 import ua.alex.source.webtester.forms.AccountForm;
 import ua.alex.source.webtester.forms.EditAccountForm;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface AccountService {
@@ -29,4 +30,6 @@ public interface AccountService {
     Account getByUniqueField(String uniqueValue, String uniqueField);
 
     void update(EditAccountForm profile);
+
+    void deleteExpiredAccount(Timestamp dayOff);
 }

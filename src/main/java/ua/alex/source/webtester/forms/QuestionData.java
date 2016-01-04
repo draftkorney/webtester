@@ -19,6 +19,7 @@ public class QuestionData implements IForm {
     private String questionName;
     private List<Answer> answerList;
     private int time;
+    private int currentTime;
 
 
     public QuestionData() {
@@ -32,6 +33,7 @@ public class QuestionData implements IForm {
         this.idQuestion = question.getIdQuestion();
         this.questionName = question.getName();
         this.time = question.getTest().getTimePerQuestion();
+        this.currentTime = this.time;
         this.answerList = convertAnswers(question.getAnswers());
 
     }
@@ -51,6 +53,14 @@ public class QuestionData implements IForm {
         answerList.add(answer);
 
         return answerList;
+    }
+
+    public int getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(int currentTime) {
+        this.currentTime = currentTime;
     }
 
     public Long getIdQuestion() {

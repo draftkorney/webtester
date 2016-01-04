@@ -12,4 +12,5 @@ public interface TestDao extends IEntityDao<Test> {
 
 
     List<Test> findTestForPass(int row, int count);
+    int  findTestCountForPass();
 }

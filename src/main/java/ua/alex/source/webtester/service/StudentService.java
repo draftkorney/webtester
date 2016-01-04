@@ -11,9 +11,15 @@ public interface StudentService {
 
     List<Test> getTestsForPass(int row, int count);
 
+    int getTestsCountForPass();
+
     int equalsResult(QuestionData questionForAnswer);
 
     void saveResultToDB(TestResult testResult);
 
     List<TestResult> getTestResult(long currentIdAccount);
+
+    List<TestResult> getTestResult(long currentIdAccount, Integer page, Integer count);
+
+    int getCountTestResult(long currentIdAccount);
 }

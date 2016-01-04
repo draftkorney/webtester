@@ -3,6 +3,7 @@ package ua.alex.source.webtester.dao;
 
 import ua.alex.source.webtester.entities.Account;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface AccountDao extends IEntityDao<Account> {
@@ -18,4 +19,6 @@ public interface AccountDao extends IEntityDao<Account> {
     Account getByUniqueField(String uniqueValue, String uniqueField);
 
     void changeUserActivity(Long idAccount);
+
+    void deleteExpiredAccount(Timestamp dayOff);
 }

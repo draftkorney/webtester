@@ -36,10 +36,22 @@ public class TestDaoImpl extends AbstractEntityDao<Test> implements TestDao {
 
     @Override
     public List<Test> findTestForPass(int row, int count) {
+        int first = (row - 1) * count;
         String q = "FROM Test t WHERE t.idTest = " +
                 "(SELECT DISTINCT q.test.idTest " +
                 "FROM Question q WHERE q.test.idTest = t.idTest AND  q.answers.size >0)";
         Query query = getSession().createQuery(q);
+        query.setFirstResult(first);
+        query.setMaxResults(count);
         return query.list();
+    }
+
+    @Override
+    public int findTestCountForPass() {
+        String q = "FROM Test t WHERE t.idTest = " +
+                "(SELECT DISTINCT q.test.idTest " +
+                "FROM Question q WHERE q.test.idTest = t.idTest AND  q.answers.size >0)";
+        Query query = getSession().createQuery(q);
+        return query.list().size();
     }
 }

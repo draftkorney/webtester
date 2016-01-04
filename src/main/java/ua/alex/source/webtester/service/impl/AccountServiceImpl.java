@@ -29,6 +29,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = {RuntimeException.class})
     public void update(Account account) {
         accountDao.update(account);
     }
@@ -96,10 +97,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = {RuntimeException.class})
     public void update(EditAccountForm profile) {
         Account account = getById(profile.getIdAccount());
         ReflectionUtils.copyByFields(account, profile);
         account.setUpdated(new Timestamp(System.currentTimeMillis()));
         accountDao.update(account);
+    }
+
+    @Override
+    @Transactional(readOnly = false, rollbackFor = {RuntimeException.class})
+    public void deleteExpiredAccount(Timestamp dayOff) {
+        accountDao.deleteExpiredAccount(dayOff);
     }
 }

@@ -53,6 +53,7 @@ public class AdminServiceImpl implements AdminService {
 
         if (idAccount == null) {
             account = entityBuilder.buildAccount();
+            account.setConfirm(true);
             account.setPassword(UUID.randomUUID().toString().substring(0, 7));
 
         } else {
@@ -90,6 +91,7 @@ public class AdminServiceImpl implements AdminService {
             admin.setLogin("admin");
             admin.setEmail("admin@admin.com");
             admin.setFio("admin");
+            admin.setConfirm(true);
             accountDao.save(admin);
 
             Role r = roleDao.getByName("administrator");

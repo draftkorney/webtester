@@ -54,6 +54,12 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
     }
 
     @Override
+    public void deleteExpiredAccount(Timestamp dayOff) {
+        getSession().createQuery("DELETE FROM Account a WHERE a.created <= :created AND a.confirm = false")
+                .setParameter("created", dayOff).executeUpdate();
+    }
+
+    @Override
     protected Class<Account> getEntityClass() {
         return Account.class;
     }

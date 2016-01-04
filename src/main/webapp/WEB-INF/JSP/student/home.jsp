@@ -5,5 +5,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="container">
-	Hello, ${CURRENT_ACCOUNT.fullName }!
+	Hello, student!
 </div>
