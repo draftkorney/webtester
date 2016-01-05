@@ -17,7 +17,7 @@ public class DefaultExceptionHandler {
     public ModelAndView exception(Exception exception, HttpServletRequest req, WebRequest request) {
         ModelAndView modelAndView = new ModelAndView("errors");
         LOGGER.error("Internal Server Error - ", exception);
-        modelAndView.addObject("errors", "Opss! Some error occurs.");
+        modelAndView.addObject("errors", "Opss! Some errors have occurred.");
         return modelAndView;
     }
 

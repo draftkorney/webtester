@@ -35,6 +35,7 @@ public class TestDaoImpl extends AbstractEntityDao<Test> implements TestDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Test> findTestForPass(int row, int count) {
         int first = (row - 1) * count;
         String q = "FROM Test t WHERE t.idTest = " +

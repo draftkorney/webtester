@@ -47,6 +47,7 @@ public class QuestionDaoImpl extends AbstractEntityDao<Question> implements Ques
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Question> getQuestionByTestIdWithAnswers(Long idTest) {
         String q = "FROM Question q WHERE q.test.id = :idTest AND q.answers.size > 0";
         Query query = getSession().createQuery(q);
