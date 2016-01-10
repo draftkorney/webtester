@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "test_result", schema = "public", catalog = "webtester")
+@Table(name = "test_result", schema = "public")
 public class TestResult extends ManagerEntity {
 
     @Id

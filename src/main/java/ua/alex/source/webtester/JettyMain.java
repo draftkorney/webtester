@@ -10,7 +10,7 @@ public class JettyMain {
         Server server = new Server();
 
         ServerConnector connector = new ServerConnector(server);
-        connector.setPort(8080);
+        connector.setPort(80);
         server.addConnector(connector);
 
         WebAppContext root = new WebAppContext("src/main/webapp", "/");

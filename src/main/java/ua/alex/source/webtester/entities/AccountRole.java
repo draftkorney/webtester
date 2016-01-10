@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "account_role", schema = "public", catalog = "webtester")
+@Table(name = "account_role", schema = "public")
 public class AccountRole extends AbstractEntity {
 
     @Id

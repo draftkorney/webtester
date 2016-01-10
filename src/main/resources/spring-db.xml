@@ -31,8 +31,8 @@
         <property name="databaseName" value="d7u3jas80s70ae"/>
         <property name="user" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
         <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-        <property name="initialConnections" value="10"/>
-        <property name="maxConnections" value="200"/>
+        <property name="initialConnections" value="1"/>
+        <property name="maxConnections" value="2"/>
         <property name="ssl" value="true"/>
         <property name="sslfactory" value="org.postgresql.ssl.NonValidatingFactory"/>
     </bean>
