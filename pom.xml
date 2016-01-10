@@ -14,7 +14,7 @@
         <spring.security.version>4.0.2.RELEASE</spring.security.version>
 
         <!--Container-->
-        <jetty.version>9.1.3.v20140225</jetty.version>
+        <jetty.version>9.2.10.v20150310</jetty.version>
 
         <war.name>webtester</war.name>
     </properties>
