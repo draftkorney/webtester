@@ -82,6 +82,7 @@ public class CommonServiceImpl implements CommonService {
     protected Account signUp(SignUpForm form, boolean sendVerificationEmail, boolean sendPasswordToEmail) throws InvalidUserInputException {
         Account a = entityBuilder.buildAccount();
         ReflectionUtils.copyByFields(a, form);
+        a.setConfirm(false);
         accountDao.save(a);
 
         Role r = roleDao.getStudentRole();

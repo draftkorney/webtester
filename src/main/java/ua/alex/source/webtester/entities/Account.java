@@ -30,7 +30,7 @@ public class Account extends ManagerEntity {
     @Column(name = "fio", nullable = false, length = 200)
     private String fio;
 
-    @Column(name = "confirm", insertable = false)
+    @Column(name = "confirm", nullable = false)
     private boolean confirm;
 
     @OneToMany(mappedBy = "account")
